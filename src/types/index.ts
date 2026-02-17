@@ -23,22 +23,6 @@ export interface ApiResponse<T = any> {
   error?: string;
   message?: string;
 }
-
-export interface PaginatedResponse<T> {
-  data: T[];
-  total: number;
-  page: number;
-  pageSize: number;
-  hasMore: boolean;
-}
-
-export interface ErrorResponse {
-  success: false;
-  error: string;
-  code?: string;
-  statusCode: number;
-}
-
 export interface LocationCoordinates {
   latitude: number;
   longitude: number;
@@ -62,17 +46,3 @@ export enum LeaveStatus {
   CANCELLED = 'cancelled',
 }
 
-export enum AttendanceStatus {
-  PRESENT = 'present',
-  ABSENT = 'absent',
-  LATE = 'late',
-  EARLY_LEAVE = 'early_leave',
-  ON_LEAVE = 'on_leave',
-  HALF_DAY = 'half_day',
-}
-
-export type AsyncState<T> = {
-  data: T | null;
-  loading: boolean;
-  error: Error | null;
-};

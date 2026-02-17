@@ -48,12 +48,6 @@ export const MOCK_HOLIDAYS = [
   { date: '2025-12-25', name: 'Christmas' },
 ];
 
-export const MOCK_DASHBOARD = {
-  presentDaysThisMonth: 11,
-  pendingLeaveCount: 1,
-  pendingApprovalsCount: 0,
-};
-
 export const MOCK_ANNOUNCEMENTS = [
   { id: 'a1', title: 'Office closed on Dec 25', body: 'Company holiday — Christmas. All units closed.', date: '2025-12-20', target: 'All' },
   { id: 'a2', title: 'New leave policy', body: 'From Jan 2025, EL carry-forward limit is 5 days. Submit by Mar 31.', date: '2025-01-05', target: 'All' },
@@ -171,35 +165,6 @@ export const MOCK_ATTENDANCE_RECORDS = [
   att('att-n13', '2026-02-13', '09:00', '18:30', 'present', 9.5),
   att('att-n14', '2026-02-14', '09:00', '18:00', 'present', 9),
   att('att-n15', '2026-02-15', '09:45', '18:00', 'late', 8.25),
-];
-
-export const MOCK_TEAM_MEMBERS = [
-  { ...MOCK_USER, currentStatus: 'in' as const, lastCheckIn: '09:15', approvedWorkLocation: 'HQ — Design & Creative Wing, Floor 2' },
-  {
-    id: 'mem-2',
-    name: 'Jordan Vane',
-    email: 'jordan.v@company.com',
-    employeeId: 'EMP-2022-012',
-    department: 'Design & Creative',
-    role: 'employee' as const,
-    joinDate: '2020-03-01',
-    currentStatus: 'in' as const,
-    lastCheckIn: '08:55',
-    approvedWorkLocation: 'HQ — Design & Creative Wing, Floor 2',
-  },
-  {
-    id: 'mem-3',
-    name: 'Sam Williams',
-    email: 'sam.w@company.com',
-    employeeId: 'EMP-2024-022',
-    department: 'Design & Creative',
-    role: 'employee' as const,
-    joinDate: '2024-01-10',
-    currentStatus: 'out' as const,
-    lastCheckIn: '09:00',
-    lastCheckOut: '17:30',
-    approvedWorkLocation: 'HQ — Design & Creative Wing, Floor 2',
-  },
 ];
 
 /** Notifications (mock) — matches GET /api/v1/notifications */
