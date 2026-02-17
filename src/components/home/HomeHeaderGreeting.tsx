@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -7,11 +7,11 @@ import {
   Modal,
   Pressable,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { COLORS, THEME } from '@constants/colors';
-import { User, Bell, Settings, LogOut } from 'lucide-react-native';
-import { useAuth } from '@context/AuthContext';
-import { MOCK_UNREAD_COUNT } from '../../data/mockData';
+import {useNavigation} from '@react-navigation/native';
+import {COLORS, THEME} from '@constants/colors';
+import {User, Bell, Settings, LogOut} from 'lucide-react-native';
+import {useAuth} from '@context/AuthContext';
+import {MOCK_UNREAD_COUNT} from '../../data/mockData';
 
 interface HomeHeaderGreetingProps {
   userName: string;
@@ -25,12 +25,13 @@ export const HomeHeaderGreeting: React.FC<HomeHeaderGreetingProps> = ({
   location = 'HQ Office',
 }) => {
   const navigation = useNavigation();
-  const { logout } = useAuth();
+  const {logout} = useAuth();
   const [menuVisible, setMenuVisible] = useState(false);
 
   const displayName = userName || 'Alex Thompson';
   const hour = new Date().getHours();
-  const greeting = hour < 12 ? 'GOOD MORNING' : hour < 17 ? 'GOOD AFTERNOON' : 'GOOD EVENING';
+  const greeting =
+    hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
 
   const handleLogout = () => {
     setMenuVisible(false);
@@ -41,49 +42,50 @@ export const HomeHeaderGreeting: React.FC<HomeHeaderGreetingProps> = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.left}>
-        <View style={styles.avatarWrap}>
+      <View style={styles.topRow}>
+        <View style={styles.left}>
           <View style={styles.avatar}>
             <User size={24} color={COLORS.textSecondary} />
           </View>
+          <View style={styles.textWrap}>
+            <Text style={styles.greeting}>{greeting}</Text>
+            <Text style={styles.name}>{displayName}</Text>
+            <Text style={styles.meta}>
+              {designation} · {location}
+            </Text>
+          </View>
         </View>
-        <View style={styles.textWrap}>
-          <Text style={styles.greeting}>{greeting}</Text>
-          <Text style={styles.name}>{displayName}</Text>
+        <View style={styles.actions}>
+          <TouchableOpacity
+            style={styles.iconBtn}
+            onPress={() => navigation.navigate('Notifications' as never)}>
+            <Bell size={22} color={COLORS.textSecondary} />
+            {hasNotifications && <View style={styles.bellDot} />}
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.iconBtnOutline}
+            onPress={() => setMenuVisible(true)}
+            activeOpacity={0.8}>
+            <Settings size={20} color={COLORS.textPrimary} />
+          </TouchableOpacity>
         </View>
-      </View>
-      <View style={styles.actions}>
-        <TouchableOpacity
-          style={styles.iconBtn}
-          onPress={() => navigation.navigate('Notifications' as never)}
-        >
-          <Bell size={22} color={COLORS.textSecondary} />
-          {hasNotifications && <View style={styles.bellDot} />}
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.iconBtnOutline}
-          onPress={() => setMenuVisible(true)}
-          activeOpacity={0.8}
-        >
-          <Settings size={20} color={COLORS.textPrimary} />
-        </TouchableOpacity>
       </View>
 
       <Modal
         visible={menuVisible}
         transparent
         animationType="fade"
-        onRequestClose={() => setMenuVisible(false)}
-      >
-        <Pressable style={styles.menuBackdrop} onPress={() => setMenuVisible(false)}>
+        onRequestClose={() => setMenuVisible(false)}>
+        <Pressable
+          style={styles.menuBackdrop}
+          onPress={() => setMenuVisible(false)}>
           <View style={styles.menuAnchor} />
         </Pressable>
         <View style={styles.menuBox}>
           <TouchableOpacity
             style={styles.menuItem}
             onPress={handleLogout}
-            activeOpacity={0.7}
-          >
+            activeOpacity={0.7}>
             <LogOut size={18} color={COLORS.error} />
             <Text style={styles.menuItemText}>Logout</Text>
           </TouchableOpacity>
@@ -95,50 +97,67 @@ export const HomeHeaderGreeting: React.FC<HomeHeaderGreetingProps> = ({
 
 const styles = StyleSheet.create({
   container: {
+    paddingHorizontal: THEME.spacing.lg,
+    paddingTop: THEME.spacing.md,
+    paddingBottom: THEME.spacing.lg,
+    backgroundColor: COLORS.background,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.borderLight,
+  },
+  topRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: THEME.spacing.lg,
-    paddingVertical: THEME.spacing.md,
-    backgroundColor: COLORS.background,
   },
-  left: { flexDirection: 'row', alignItems: 'center', flex: 1 },
-  avatarWrap: { marginRight: THEME.spacing.md },
+  left: {flexDirection: 'row', alignItems: 'center', flex: 1},
   avatar: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    width: 48,
+    height: 48,
+    borderRadius: 24,
     backgroundColor: '#FEE7D6',
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: THEME.spacing.md,
   },
-  textWrap: { flex: 1 },
+  textWrap: {flex: 1},
   greeting: {
-    fontSize: 12,
-    fontWeight: '600',
+    fontSize: 13,
+    fontWeight: '500',
     color: COLORS.textSecondary,
-    letterSpacing: 0.5,
   },
   name: {
-    fontSize: 17,
+    fontSize: 18,
     fontWeight: '700',
     color: COLORS.textPrimary,
     marginTop: 2,
+    letterSpacing: -0.3,
   },
-  actions: { flexDirection: 'row', alignItems: 'center', gap: THEME.spacing.sm },
+  meta: {
+    fontSize: 11,
+    color: COLORS.textTertiary,
+    marginTop: 2,
+  },
+  dateText: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: COLORS.textTertiary,
+    marginTop: THEME.spacing.sm,
+    letterSpacing: 0.3,
+  },
+  actions: {flexDirection: 'row', alignItems: 'center', gap: THEME.spacing.sm},
   iconBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 42,
+    height: 42,
+    borderRadius: 21,
     backgroundColor: COLORS.surfaceVariant,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
   },
   iconBtnOutline: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 42,
+    height: 42,
+    borderRadius: 21,
     borderWidth: 1,
     borderColor: COLORS.border,
     justifyContent: 'center',

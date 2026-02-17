@@ -37,7 +37,7 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
     case 'LOGIN_ERROR':
       return { ...state, isLoading: false, error: action.payload };
     case 'LOGOUT':
-      return initialState;
+      return { ...initialState, isLoading: false };
     case 'SET_USER':
       return { ...state, user: action.payload };
     case 'RESTORE_TOKEN':
@@ -100,7 +100,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const logout = async () => {
-    // No backend or storage usage for now — just redirect to login screen
+    try {
+      await secureStorage.remove('accessToken');
+      await secureStorage.remove('refreshToken');
+      await appStorage.remove(STORAGE_KEYS.USER_DATA);
+    } catch (_) {}
     dispatch({ type: 'LOGOUT' });
   };
 

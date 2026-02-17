@@ -1,5 +1,11 @@
 import React, {useState, useCallback} from 'react';
-import {View, ScrollView, StyleSheet, SafeAreaView, RefreshControl} from 'react-native';
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  SafeAreaView,
+  RefreshControl,
+} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import {useAuth} from '@context/AuthContext';
 import {useAttendance} from '@context/AttendanceContext';
@@ -12,6 +18,7 @@ import {
   MOCK_HOLIDAYS,
 } from '../data/mockData';
 import {HomeHeaderGreeting} from '@components/home/HomeHeaderGreeting';
+import {WelcomeStrip} from '@components/home/WelcomeStrip';
 import {LiveAttendanceCard} from '@components/home/LiveAttendanceCard';
 import {LeaveBalanceCards} from '@components/home/LeaveBalanceCards';
 import {UpcomingHolidaysList} from '@components/home/UpcomingHolidaysList';
@@ -91,8 +98,6 @@ export function HomeScreen({
             onViewDetails={() => navigation?.navigate('Leave')}
           />
 
-          <UpcomingHolidaysList holidays={MOCK_HOLIDAYS} maxItems={3} />
-
           <AnnouncementsBlock announcements={MOCK_ANNOUNCEMENTS} maxItems={2} />
         </View>
       </ScrollView>
@@ -103,6 +108,9 @@ export function HomeScreen({
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: COLORS.backgroundSecondary},
   scroll: {flex: 1},
-  scrollContent: {paddingBottom: THEME.spacing.xl},
-  content: {paddingHorizontal: SCREEN_PAD, paddingTop: THEME.spacing.xs},
+  scrollContent: {paddingBottom: THEME.spacing.xxl},
+  content: {
+    paddingHorizontal: SCREEN_PAD,
+    paddingTop: THEME.spacing.lg,
+  },
 });

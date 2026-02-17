@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { COLORS, THEME } from '@constants/colors';
-import { Umbrella, Heart, Calendar } from 'lucide-react-native';
+import { SectionHeader } from './SectionHeader';
 
 interface LeaveBalanceCardsProps {
   annual: number;
@@ -10,84 +10,72 @@ interface LeaveBalanceCardsProps {
   onViewDetails?: () => void;
 }
 
+const CONFIG = [
+  { key: 'annual' as const, label: 'Annual', valueKey: 'annual' as const, accent: COLORS.leaveAnnual },
+  { key: 'sick' as const, label: 'Sick', valueKey: 'sick' as const, accent: COLORS.leaveSick },
+  { key: 'casual' as const, label: 'Casual', valueKey: 'casual' as const, accent: COLORS.leaveCasual },
+] as const;
+
 export const LeaveBalanceCards: React.FC<LeaveBalanceCardsProps> = ({
   annual,
   sick,
   casual,
   onViewDetails,
-}) => (
-  <View style={styles.section}>
-    <View style={styles.header}>
-      <Text style={styles.sectionTitle}>Leave Balance</Text>
-      <TouchableOpacity onPress={onViewDetails}>
-        <Text style={styles.actionLink}>View Details</Text>
-      </TouchableOpacity>
-    </View>
-    <View style={styles.cardsRow}>
-      <View style={[styles.balanceCard, styles.cardAnnual]}>
-        <Umbrella size={22} color={COLORS.leaveAnnual} style={styles.cardIcon} />
-        <Text style={[styles.balanceNumber, { color: COLORS.leaveAnnual }]}>{annual}</Text>
-        <Text style={styles.balanceLabel}>ANNUAL</Text>
-      </View>
-      <View style={[styles.balanceCard, styles.cardSick]}>
-        <Heart size={22} color={COLORS.leaveSick} style={styles.cardIcon} />
-        <Text style={[styles.balanceNumber, { color: COLORS.leaveSick }]}>{sick}</Text>
-        <Text style={styles.balanceLabel}>SICK</Text>
-      </View>
-      <View style={[styles.balanceCard, styles.cardCasual]}>
-        <Calendar size={22} color={COLORS.leaveCasual} style={styles.cardIcon} />
-        <Text style={[styles.balanceNumber, { color: COLORS.leaveCasual }]}>{casual}</Text>
-        <Text style={styles.balanceLabel}>CASUAL</Text>
+}) => {
+  const values = { annual, sick, casual };
+
+  return (
+    <View style={styles.section}>
+      <SectionHeader
+        title="Leave balance"
+        actionLabel="View details"
+        onAction={onViewDetails}
+      />
+      <View style={styles.cardsRow}>
+        {CONFIG.map(({ key, label, valueKey, accent }) => (
+          <View key={key} style={styles.card}>
+            <Text style={styles.label}>{label}</Text>
+            <Text style={[styles.number, { color: accent }]}>
+              {values[valueKey]}
+            </Text>
+            <Text style={styles.sublabel}>days left</Text>
+          </View>
+        ))}
       </View>
     </View>
-  </View>
-);
+  );
+};
 
 const styles = StyleSheet.create({
-  section: { marginBottom: THEME.spacing.lg },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: THEME.spacing.sm,
-  },
-  sectionTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: COLORS.textPrimary,
-  },
-  actionLink: {
-    fontSize: 13,
-    fontWeight: '600',
-    color: COLORS.primary,
-  },
+  section: { marginBottom: THEME.spacing.xl },
   cardsRow: {
     flexDirection: 'row',
     gap: THEME.spacing.sm,
   },
-  balanceCard: {
+  card: {
     flex: 1,
     backgroundColor: COLORS.surface,
     borderRadius: THEME.borderRadius.lg,
     padding: THEME.spacing.md,
-    alignItems: 'center',
-    minHeight: 100,
     borderWidth: 1,
     borderColor: COLORS.borderLight,
+    ...THEME.shadows.sm,
   },
-  cardAnnual: {},
-  cardSick: {},
-  cardCasual: {},
-  cardIcon: { marginBottom: THEME.spacing.xs },
-  balanceNumber: {
-    fontSize: 22,
-    fontWeight: '700',
-    marginBottom: 2,
-  },
-  balanceLabel: {
+  label: {
     fontSize: 11,
     fontWeight: '600',
     color: COLORS.textSecondary,
-    letterSpacing: 0.5,
+    letterSpacing: 0.3,
+    marginBottom: 4,
+  },
+  number: {
+    fontSize: 20,
+    fontWeight: '700',
+    letterSpacing: -0.3,
+  },
+  sublabel: {
+    fontSize: 10,
+    color: COLORS.textTertiary,
+    marginTop: 2,
   },
 });

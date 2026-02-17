@@ -43,9 +43,14 @@ export const LiveAttendanceCard: React.FC<LiveAttendanceCardProps> = ({
   const todayHours = isPunchedIn ? elapsedHours : (checkInTime && checkOutTime ? 6.75 : 0);
   const weeklyAvg = 8.2;
 
+  const statusAccent = !checkInTime ? COLORS.primary : isPunchedIn ? COLORS.success : COLORS.textTertiary;
+
   return (
-    <View style={styles.card}>
-      <Text style={styles.sectionLabel}>Attendance Status</Text>
+    <View style={[styles.card, { borderLeftColor: statusAccent }]}>
+      <View style={styles.labelRow}>
+        <Text style={styles.sectionLabel}>Attendance</Text>
+        {isPunchedIn && <View style={styles.livePill}><Text style={styles.livePillText}>LIVE</Text></View>}
+      </View>
 
       {!checkInTime ? (
         <>
@@ -155,17 +160,37 @@ export const LiveAttendanceCard: React.FC<LiveAttendanceCardProps> = ({
 const styles = StyleSheet.create({
   card: {
     backgroundColor: COLORS.surface,
-    borderRadius: THEME.borderRadius.lg,
+    borderRadius: THEME.borderRadius.xl,
     padding: THEME.spacing.lg,
     marginBottom: THEME.spacing.lg,
     borderWidth: 1,
+    borderLeftWidth: 4,
     borderColor: COLORS.borderLight,
+    ...THEME.shadows.sm,
+  },
+  labelRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: THEME.spacing.md,
   },
   sectionLabel: {
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 15,
+    fontWeight: '700',
     color: COLORS.textPrimary,
-    marginBottom: THEME.spacing.md,
+    letterSpacing: -0.2,
+  },
+  livePill: {
+    backgroundColor: 'rgba(76, 175, 80, 0.12)',
+    paddingHorizontal: THEME.spacing.sm,
+    paddingVertical: 2,
+    borderRadius: THEME.borderRadius.xs,
+  },
+  livePillText: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: COLORS.success,
+    letterSpacing: 0.5,
   },
   statusRow: {
     flexDirection: 'row',
@@ -231,8 +256,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: COLORS.primary,
-    paddingVertical: THEME.spacing.md,
-    borderRadius: THEME.borderRadius.md,
+    paddingVertical: THEME.spacing.lg,
+    borderRadius: THEME.borderRadius.lg,
   },
   punchButtonDisabled: { opacity: 0.7 },
   punchButtonDone: {

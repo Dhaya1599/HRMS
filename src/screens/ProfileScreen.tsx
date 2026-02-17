@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, {useState, useCallback} from 'react';
 import {
   View,
   ScrollView,
@@ -10,13 +10,13 @@ import {
   Linking,
   Platform,
 } from 'react-native';
-import { useAuth } from '@context/AuthContext';
-import { Card } from '@components/ui/Card';
-import { Modal } from '@components/ui/Modal';
-import { Input } from '@components/ui/Input';
-import { ScreenTitle, SCREEN_PAD } from '@components/ui/ScreenTitle';
-import { COLORS, THEME } from '@constants/colors';
-import { MOCK_PROFILE_EXTENDED } from '../data/mockData';
+import {useAuth} from '@context/AuthContext';
+import {Card} from '@components/ui/Card';
+import {Modal} from '@components/ui/Modal';
+import {Input} from '@components/ui/Input';
+import {ScreenTitle, SCREEN_PAD} from '@components/ui/ScreenTitle';
+import {COLORS, THEME} from '@constants/colors';
+import {MOCK_PROFILE_EXTENDED} from '../data/mockData';
 import {
   User as UserIcon,
   Mail,
@@ -31,9 +31,13 @@ import {
   Map,
 } from 'lucide-react-native';
 
-export function ProfileScreen({ navigation }: { navigation?: { goBack?: () => void; navigate?: (name: string) => void } }) {
-  const nav = navigation as { navigate?: (name: string) => void } | undefined;
-  const { state: authState, logout } = useAuth();
+export function ProfileScreen({
+  navigation,
+}: {
+  navigation?: {goBack?: () => void; navigate?: (name: string) => void};
+}) {
+  const nav = navigation as {navigate?: (name: string) => void} | undefined;
+  const {state: authState, logout} = useAuth();
   const user = authState.user;
 
   const [profile, setProfile] = useState(MOCK_PROFILE_EXTENDED);
@@ -41,14 +45,22 @@ export function ProfileScreen({ navigation }: { navigation?: { goBack?: () => vo
   const [editEmergencyVisible, setEditEmergencyVisible] = useState(false);
   const [displayPhone, setDisplayPhone] = useState(user?.phone ?? '');
   const [editPhone, setEditPhone] = useState(displayPhone);
-  const [editAddress, setEditAddress] = useState((MOCK_PROFILE_EXTENDED as { address?: string }).address ?? '');
-  const [editEmergencyName, setEditEmergencyName] = useState(profile.emergencyContact.name);
-  const [editEmergencyRelation, setEditEmergencyRelation] = useState(profile.emergencyContact.relationship);
-  const [editEmergencyPhone, setEditEmergencyPhone] = useState(profile.emergencyContact.phone);
+  const [editAddress, setEditAddress] = useState(
+    (MOCK_PROFILE_EXTENDED as {address?: string}).address ?? '',
+  );
+  const [editEmergencyName, setEditEmergencyName] = useState(
+    profile.emergencyContact.name,
+  );
+  const [editEmergencyRelation, setEditEmergencyRelation] = useState(
+    profile.emergencyContact.relationship,
+  );
+  const [editEmergencyPhone, setEditEmergencyPhone] = useState(
+    profile.emergencyContact.phone,
+  );
 
   const openEditProfile = useCallback(() => {
     setEditPhone((displayPhone || user?.phone) ?? '');
-    setEditAddress((profile as { address?: string }).address ?? '');
+    setEditAddress((profile as {address?: string}).address ?? '');
     setEditProfileVisible(true);
   }, [displayPhone, user?.phone, profile]);
 
@@ -60,13 +72,13 @@ export function ProfileScreen({ navigation }: { navigation?: { goBack?: () => vo
   }, [profile.emergencyContact]);
 
   const saveEditProfile = useCallback(() => {
-    setProfile((p) => ({ ...p, address: editAddress }));
+    setProfile(p => ({...p, address: editAddress}));
     setDisplayPhone(editPhone);
     setEditProfileVisible(false);
   }, [editAddress, editPhone]);
 
   const saveEditEmergency = useCallback(() => {
-    setProfile((p) => ({
+    setProfile(p => ({
       ...p,
       emergencyContact: {
         name: editEmergencyName,
@@ -78,16 +90,24 @@ export function ProfileScreen({ navigation }: { navigation?: { goBack?: () => vo
   }, [editEmergencyName, editEmergencyRelation, editEmergencyPhone]);
 
   const joinDateFormatted = user?.joinDate
-    ? new Date(user.joinDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+    ? new Date(user.joinDate).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+      })
     : '—';
 
   const handleChangePassword = () =>
-    Alert.alert('Change Password', 'Forgot password / Reset password — use web portal or contact HR. Mock UI.', [{ text: 'OK' }]);
+    Alert.alert(
+      'Change Password',
+      'Forgot password / Reset password — use web portal or contact HR. Mock UI.',
+      [{text: 'OK'}],
+    );
   const handleEditProfile = () => openEditProfile();
   const handleLogout = () => {
     Alert.alert('Logout', 'Are you sure you want to logout?', [
-      { text: 'Cancel', style: 'cancel' },
-      { text: 'Logout', onPress: () => logout(), style: 'destructive' },
+      {text: 'Cancel', style: 'cancel'},
+      {text: 'Logout', onPress: () => logout(), style: 'destructive'},
     ]);
   };
 
@@ -106,7 +126,9 @@ export function ProfileScreen({ navigation }: { navigation?: { goBack?: () => vo
 
   const callEmergency = () => {
     const num = profile.emergencyContact.phone.replace(/\D/g, '');
-    Linking.openURL(`tel:${num}`).catch(() => Alert.alert('Error', 'Could not open dialer'));
+    Linking.openURL(`tel:${num}`).catch(() =>
+      Alert.alert('Error', 'Could not open dialer'),
+    );
   };
 
   if (!user) {
@@ -118,7 +140,9 @@ export function ProfileScreen({ navigation }: { navigation?: { goBack?: () => vo
       <ScreenTitle
         title="Profile Details"
         right={
-          <TouchableOpacity onPress={handleEditProfile} hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}>
+          <TouchableOpacity
+            onPress={handleEditProfile}
+            hitSlop={{top: 12, bottom: 12, left: 12, right: 12}}>
             <Edit2 size={22} color={COLORS.primary} />
           </TouchableOpacity>
         }
@@ -127,22 +151,52 @@ export function ProfileScreen({ navigation }: { navigation?: { goBack?: () => vo
         visible={editProfileVisible}
         onClose={() => setEditProfileVisible(false)}
         title="Edit profile"
-        primaryAction={{ label: 'Save', onPress: saveEditProfile }}
-      >
-        <Input label="Phone" placeholder="+1 (555) 000-0000" value={editPhone} onChangeText={setEditPhone} containerStyle={styles.modalInput} />
-        <Input label="Address" placeholder="Street, City, State, ZIP" value={editAddress} onChangeText={setEditAddress} containerStyle={styles.modalInput} />
+        primaryAction={{label: 'Save', onPress: saveEditProfile}}>
+        <Input
+          label="Phone"
+          placeholder="+1 (555) 000-0000"
+          value={editPhone}
+          onChangeText={setEditPhone}
+          containerStyle={styles.modalInput}
+        />
+        <Input
+          label="Address"
+          placeholder="Street, City, State, ZIP"
+          value={editAddress}
+          onChangeText={setEditAddress}
+          containerStyle={styles.modalInput}
+        />
       </Modal>
       <Modal
         visible={editEmergencyVisible}
         onClose={() => setEditEmergencyVisible(false)}
         title="Edit emergency contact"
-        primaryAction={{ label: 'Save', onPress: saveEditEmergency }}
-      >
-        <Input label="Name" placeholder="Full name" value={editEmergencyName} onChangeText={setEditEmergencyName} containerStyle={styles.modalInput} />
-        <Input label="Relationship" placeholder="e.g. Spouse, Parent" value={editEmergencyRelation} onChangeText={setEditEmergencyRelation} containerStyle={styles.modalInput} />
-        <Input label="Phone" placeholder="+1 (555) 000-0000" value={editEmergencyPhone} onChangeText={setEditEmergencyPhone} containerStyle={styles.modalInput} />
+        primaryAction={{label: 'Save', onPress: saveEditEmergency}}>
+        <Input
+          label="Name"
+          placeholder="Full name"
+          value={editEmergencyName}
+          onChangeText={setEditEmergencyName}
+          containerStyle={styles.modalInput}
+        />
+        <Input
+          label="Relationship"
+          placeholder="e.g. Spouse, Parent"
+          value={editEmergencyRelation}
+          onChangeText={setEditEmergencyRelation}
+          containerStyle={styles.modalInput}
+        />
+        <Input
+          label="Phone"
+          placeholder="+1 (555) 000-0000"
+          value={editEmergencyPhone}
+          onChangeText={setEditEmergencyPhone}
+          containerStyle={styles.modalInput}
+        />
       </Modal>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}>
         {/* Profile overview */}
         <View style={styles.profileOverview}>
           <View style={styles.avatarWrapper}>
@@ -154,7 +208,9 @@ export function ProfileScreen({ navigation }: { navigation?: { goBack?: () => vo
             </View>
           </View>
           <Text style={styles.name}>{user.name}</Text>
-          <Text style={styles.designation}>{profile.designation.toUpperCase()}</Text>
+          <Text style={styles.designation}>
+            {profile.designation.toUpperCase()}
+          </Text>
           <View style={styles.employeeIdBadge}>
             <Text style={styles.employeeIdText}>ID: {user.employeeId}</Text>
           </View>
@@ -177,15 +233,19 @@ export function ProfileScreen({ navigation }: { navigation?: { goBack?: () => vo
             <Phone size={20} color={COLORS.primary} style={styles.rowIcon} />
             <View style={styles.infoContent}>
               <Text style={styles.infoLabel}>Phone Number</Text>
-              <Text style={styles.infoValue}>{(displayPhone || user?.phone) ?? '—'}</Text>
+              <Text style={styles.infoValue}>
+                {(displayPhone || user?.phone) ?? '—'}
+              </Text>
             </View>
           </View>
-          {(profile as { address?: string }).address && (
+          {(profile as {address?: string}).address && (
             <View style={styles.infoRow}>
               <MapPin size={20} color={COLORS.primary} style={styles.rowIcon} />
               <View style={styles.infoContent}>
                 <Text style={styles.infoLabel}>Address</Text>
-                <Text style={styles.infoValue}>{(profile as { address?: string }).address ?? '—'}</Text>
+                <Text style={styles.infoValue}>
+                  {(profile as {address?: string}).address ?? '—'}
+                </Text>
               </View>
             </View>
           )}
@@ -200,7 +260,9 @@ export function ProfileScreen({ navigation }: { navigation?: { goBack?: () => vo
           </View>
           <View style={styles.employmentRow}>
             <Text style={styles.employmentLabel}>Reporting Manager</Text>
-            <Text style={styles.employmentValueOrange}>{profile.reportingManager}</Text>
+            <Text style={styles.employmentValueOrange}>
+              {profile.reportingManager}
+            </Text>
           </View>
           <View style={styles.employmentRow}>
             <Text style={styles.employmentLabel}>Date of Joining</Text>
@@ -213,7 +275,12 @@ export function ProfileScreen({ navigation }: { navigation?: { goBack?: () => vo
           {'approvedWorkLocation' in profile && (
             <View style={styles.employmentRow}>
               <Text style={styles.employmentLabel}>Approved Work Location</Text>
-              <Text style={styles.employmentValue}>{(profile as { approvedWorkLocation?: string }).approvedWorkLocation}</Text>
+              <Text style={styles.employmentValue}>
+                {
+                  (profile as {approvedWorkLocation?: string})
+                    .approvedWorkLocation
+                }
+              </Text>
             </View>
           )}
         </Card>
@@ -231,12 +298,17 @@ export function ProfileScreen({ navigation }: { navigation?: { goBack?: () => vo
               <UserIcon size={20} color={COLORS.primary} />
             </View>
             <View style={styles.emergencyContent}>
-              <Text style={styles.emergencyName}>{profile.emergencyContact.name}</Text>
+              <Text style={styles.emergencyName}>
+                {profile.emergencyContact.name}
+              </Text>
               <Text style={styles.emergencyMeta}>
-                {profile.emergencyContact.relationship} • {profile.emergencyContact.phone}
+                {profile.emergencyContact.relationship} •{' '}
+                {profile.emergencyContact.phone}
               </Text>
             </View>
-            <TouchableOpacity onPress={callEmergency} style={styles.emergencyCallBtn}>
+            <TouchableOpacity
+              onPress={callEmergency}
+              style={styles.emergencyCallBtn}>
               <Phone size={20} color={COLORS.primary} />
             </TouchableOpacity>
           </View>
@@ -247,39 +319,45 @@ export function ProfileScreen({ navigation }: { navigation?: { goBack?: () => vo
             <Edit2 size={20} color={COLORS.primary} />
             <Text style={styles.actionText}>Edit Profile</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.actionRow, styles.actionRowBorder]} onPress={() => nav?.navigate?.('Notifications')}>
+          <TouchableOpacity
+            style={[styles.actionRow, styles.actionRowBorder]}
+            onPress={() => nav?.navigate?.('Notifications')}>
             <Bell size={20} color={COLORS.primary} />
             <Text style={styles.actionText}>Notifications</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.actionRow, styles.actionRowBorder]} onPress={() => nav?.navigate?.('Leave')}>
+          <TouchableOpacity
+            style={[styles.actionRow, styles.actionRowBorder]}
+            onPress={() => nav?.navigate?.('Leave')}>
             <Map size={20} color={COLORS.primary} />
             <Text style={styles.actionText}>Work locations</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.actionRow, styles.actionRowBorder]} onPress={handleChangePassword}>
+          {/* <TouchableOpacity
+            style={[styles.actionRow, styles.actionRowBorder]}
+            onPress={handleChangePassword}>
             <Lock size={20} color={COLORS.primary} />
             <Text style={styles.actionText}>Change Password</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
 
-        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+        {/* <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <LogOut size={20} color={COLORS.textPrimary} />
           <Text style={styles.logoutText}>Logout</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: COLORS.background },
-  scrollContent: { paddingBottom: THEME.spacing.xl },
+  container: {flex: 1, backgroundColor: COLORS.background},
+  scrollContent: {paddingBottom: THEME.spacing.xl},
   profileOverview: {
     alignItems: 'center',
     paddingVertical: THEME.spacing.lg,
     borderBottomWidth: 1,
     borderBottomColor: COLORS.border,
   },
-  avatarWrapper: { position: 'relative', marginBottom: THEME.spacing.md },
+  avatarWrapper: {position: 'relative', marginBottom: THEME.spacing.md},
   avatarContainer: {
     width: 80,
     height: 80,
@@ -301,7 +379,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  name: { fontSize: 20, fontWeight: '600', color: COLORS.textPrimary, marginBottom: THEME.spacing.xs },
+  name: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: COLORS.textPrimary,
+    marginBottom: THEME.spacing.xs,
+  },
   designation: {
     fontSize: 11,
     fontWeight: '600',
@@ -315,8 +398,8 @@ const styles = StyleSheet.create({
     paddingVertical: THEME.spacing.xs,
     borderRadius: THEME.borderRadius.md,
   },
-  employeeIdText: { fontSize: 11, fontWeight: '600', color: COLORS.onPrimary },
-  card: { marginHorizontal: SCREEN_PAD, marginBottom: THEME.spacing.md },
+  employeeIdText: {fontSize: 11, fontWeight: '600', color: COLORS.onPrimary},
+  card: {marginHorizontal: SCREEN_PAD, marginBottom: THEME.spacing.md},
   sectionTitle: {
     fontSize: 10,
     fontWeight: '600',
@@ -330,21 +413,35 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: THEME.spacing.md,
   },
-  editLink: { fontSize: 12, fontWeight: '600', color: COLORS.primary },
-  modalInput: { marginBottom: THEME.spacing.md },
+  editLink: {fontSize: 12, fontWeight: '600', color: COLORS.primary},
+  modalInput: {marginBottom: THEME.spacing.md},
   infoRow: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: THEME.spacing.md,
   },
-  rowIcon: { marginRight: THEME.spacing.md },
-  infoContent: { flex: 1 },
-  infoLabel: { ...THEME.typography.caption, color: COLORS.textSecondary },
-  infoValue: { ...THEME.typography.body, color: COLORS.textPrimary, fontWeight: '500' },
-  employmentRow: { marginBottom: THEME.spacing.sm },
-  employmentLabel: { ...THEME.typography.caption, color: COLORS.textSecondary },
-  employmentValue: { ...THEME.typography.body, color: COLORS.textPrimary, fontWeight: '600', marginTop: 2 },
-  employmentValueOrange: { ...THEME.typography.body, color: COLORS.primary, fontWeight: '600', marginTop: 2 },
+  rowIcon: {marginRight: THEME.spacing.md},
+  infoContent: {flex: 1},
+  infoLabel: {...THEME.typography.caption, color: COLORS.textSecondary},
+  infoValue: {
+    ...THEME.typography.body,
+    color: COLORS.textPrimary,
+    fontWeight: '500',
+  },
+  employmentRow: {marginBottom: THEME.spacing.sm},
+  employmentLabel: {...THEME.typography.caption, color: COLORS.textSecondary},
+  employmentValue: {
+    ...THEME.typography.body,
+    color: COLORS.textPrimary,
+    fontWeight: '600',
+    marginTop: 2,
+  },
+  employmentValueOrange: {
+    ...THEME.typography.body,
+    color: COLORS.primary,
+    fontWeight: '600',
+    marginTop: 2,
+  },
   emergencyCard: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -352,20 +449,28 @@ const styles = StyleSheet.create({
     padding: THEME.spacing.md,
     borderRadius: THEME.borderRadius.md,
   },
-  emergencyIcon: { marginRight: THEME.spacing.md },
-  emergencyContent: { flex: 1 },
-  emergencyName: { fontSize: 15, color: COLORS.textPrimary, fontWeight: '600' },
-  emergencyMeta: { ...THEME.typography.caption, color: COLORS.textSecondary, marginTop: 2 },
-  emergencyCallBtn: { padding: THEME.spacing.sm },
-  actions: { marginHorizontal: SCREEN_PAD, marginBottom: THEME.spacing.md },
+  emergencyIcon: {marginRight: THEME.spacing.md},
+  emergencyContent: {flex: 1},
+  emergencyName: {fontSize: 15, color: COLORS.textPrimary, fontWeight: '600'},
+  emergencyMeta: {
+    ...THEME.typography.caption,
+    color: COLORS.textSecondary,
+    marginTop: 2,
+  },
+  emergencyCallBtn: {padding: THEME.spacing.sm},
+  actions: {marginHorizontal: SCREEN_PAD, marginBottom: THEME.spacing.md},
   actionRow: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: THEME.spacing.md,
     gap: THEME.spacing.md,
   },
-  actionRowBorder: { borderTopWidth: 1, borderTopColor: COLORS.border },
-  actionText: { ...THEME.typography.body, color: COLORS.textPrimary, fontWeight: '500' },
+  actionRowBorder: {borderTopWidth: 1, borderTopColor: COLORS.border},
+  actionText: {
+    ...THEME.typography.body,
+    color: COLORS.textPrimary,
+    fontWeight: '500',
+  },
   logoutButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -376,5 +481,5 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.error,
     borderRadius: THEME.borderRadius.md,
   },
-  logoutText: { fontSize: 15, color: COLORS.textPrimary, fontWeight: '600' },
+  logoutText: {fontSize: 15, color: COLORS.textPrimary, fontWeight: '600'},
 });
