@@ -1,8 +1,4 @@
-export { GreetingBlock } from './GreetingBlock';
-export { KeyInfoCards } from './KeyInfoCards';
 export { AnnouncementsBlock } from './AnnouncementsBlock';
-export { HolidayBlock } from './HolidayBlock';
-export { QuickActionsBlock } from './QuickActionsBlock';
 export { HomeHeaderGreeting } from './HomeHeaderGreeting';
 export { LiveAttendanceCard } from './LiveAttendanceCard';
 export { LeaveBalanceCards } from './LeaveBalanceCards';
