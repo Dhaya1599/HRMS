@@ -1,54 +1,50 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { COLORS, THEME } from '@constants/colors';
+import { Umbrella, Heart, Calendar } from 'lucide-react-native';
 
 interface LeaveBalanceCardsProps {
   annual: number;
   sick: number;
-  onHistory?: () => void;
+  casual: number;
+  onViewDetails?: () => void;
 }
-
-const MAX_ANNUAL = 18;
-const MAX_SICK = 8;
 
 export const LeaveBalanceCards: React.FC<LeaveBalanceCardsProps> = ({
   annual,
   sick,
-  onHistory,
-}) => {
-  const annualPct = Math.min(100, (annual / MAX_ANNUAL) * 100);
-  const sickPct = Math.min(100, (sick / MAX_SICK) * 100);
-
-  return (
-    <View style={styles.section}>
-      <View style={styles.header}>
-        <Text style={styles.sectionTitle}>Leave Balance</Text>
-        <TouchableOpacity onPress={onHistory}>
-          <Text style={styles.actionLink}>History →</Text>
-        </TouchableOpacity>
+  casual,
+  onViewDetails,
+}) => (
+  <View style={styles.section}>
+    <View style={styles.header}>
+      <Text style={styles.sectionTitle}>Leave Balance</Text>
+      <TouchableOpacity onPress={onViewDetails}>
+        <Text style={styles.actionLink}>View Details</Text>
+      </TouchableOpacity>
+    </View>
+    <View style={styles.cardsRow}>
+      <View style={[styles.balanceCard, styles.cardAnnual]}>
+        <Umbrella size={22} color={COLORS.leaveAnnual} style={styles.cardIcon} />
+        <Text style={[styles.balanceNumber, { color: COLORS.leaveAnnual }]}>{annual}</Text>
+        <Text style={styles.balanceLabel}>ANNUAL</Text>
       </View>
-      <View style={styles.cardsRow}>
-        <View style={styles.balanceCard}>
-          <View style={styles.ringWrapper}>
-            <Text style={styles.balanceNumber}>{annual}</Text>
-          </View>
-          <Text style={styles.balanceLabel}>Annual</Text>
-          <Text style={styles.balanceSub}>DAYS REMAINING</Text>
-        </View>
-        <View style={styles.balanceCard}>
-          <View style={styles.ringWrapper}>
-            <Text style={styles.balanceNumber}>{sick}</Text>
-          </View>
-          <Text style={styles.balanceLabel}>Sick Leave</Text>
-          <Text style={styles.balanceSub}>DAYS REMAINING</Text>
-        </View>
+      <View style={[styles.balanceCard, styles.cardSick]}>
+        <Heart size={22} color={COLORS.leaveSick} style={styles.cardIcon} />
+        <Text style={[styles.balanceNumber, { color: COLORS.leaveSick }]}>{sick}</Text>
+        <Text style={styles.balanceLabel}>SICK</Text>
+      </View>
+      <View style={[styles.balanceCard, styles.cardCasual]}>
+        <Calendar size={22} color={COLORS.leaveCasual} style={styles.cardIcon} />
+        <Text style={[styles.balanceNumber, { color: COLORS.leaveCasual }]}>{casual}</Text>
+        <Text style={styles.balanceLabel}>CASUAL</Text>
       </View>
     </View>
-  );
-};
+  </View>
+);
 
 const styles = StyleSheet.create({
-  section: { marginBottom: THEME.spacing.md },
+  section: { marginBottom: THEME.spacing.lg },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -67,39 +63,31 @@ const styles = StyleSheet.create({
   },
   cardsRow: {
     flexDirection: 'row',
-    gap: THEME.spacing.md,
+    gap: THEME.spacing.sm,
   },
   balanceCard: {
     flex: 1,
     backgroundColor: COLORS.surface,
-    borderRadius: THEME.borderRadius.md,
+    borderRadius: THEME.borderRadius.lg,
     padding: THEME.spacing.md,
     alignItems: 'center',
+    minHeight: 100,
+    borderWidth: 1,
+    borderColor: COLORS.borderLight,
   },
-  ringWrapper: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    borderWidth: 2,
-    borderColor: COLORS.primary,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: THEME.spacing.xs,
-  },
+  cardAnnual: {},
+  cardSick: {},
+  cardCasual: {},
+  cardIcon: { marginBottom: THEME.spacing.xs },
   balanceNumber: {
     fontSize: 22,
     fontWeight: '700',
-    color: COLORS.textPrimary,
+    marginBottom: 2,
   },
   balanceLabel: {
-    fontSize: 13,
+    fontSize: 11,
     fontWeight: '600',
-    color: COLORS.textPrimary,
-  },
-  balanceSub: {
-    fontSize: 9,
     color: COLORS.textSecondary,
     letterSpacing: 0.5,
-    marginTop: 1,
   },
 });

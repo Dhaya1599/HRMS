@@ -9,10 +9,12 @@ import {
   MOCK_PROFILE_EXTENDED,
   MOCK_LEAVE_BALANCE,
   MOCK_ANNOUNCEMENTS,
+  MOCK_HOLIDAYS,
 } from '../data/mockData';
 import {HomeHeaderGreeting} from '@components/home/HomeHeaderGreeting';
 import {LiveAttendanceCard} from '@components/home/LiveAttendanceCard';
 import {LeaveBalanceCards} from '@components/home/LeaveBalanceCards';
+import {UpcomingHolidaysList} from '@components/home/UpcomingHolidaysList';
 import {AnnouncementsBlock} from '@components/home/AnnouncementsBlock';
 import {SCREEN_PAD} from '@components/ui/ScreenTitle';
 
@@ -85,8 +87,11 @@ export function HomeScreen({
           <LeaveBalanceCards
             annual={effectiveLeaveBalance.earned}
             sick={effectiveLeaveBalance.sick}
-            onHistory={() => navigation?.navigate('Leave')}
+            casual={effectiveLeaveBalance.casual}
+            onViewDetails={() => navigation?.navigate('Leave')}
           />
+
+          <UpcomingHolidaysList holidays={MOCK_HOLIDAYS} maxItems={3} />
 
           <AnnouncementsBlock announcements={MOCK_ANNOUNCEMENTS} maxItems={2} />
         </View>
@@ -96,7 +101,7 @@ export function HomeScreen({
 }
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: COLORS.background},
+  container: {flex: 1, backgroundColor: COLORS.backgroundSecondary},
   scroll: {flex: 1},
   scrollContent: {paddingBottom: THEME.spacing.xl},
   content: {paddingHorizontal: SCREEN_PAD, paddingTop: THEME.spacing.xs},

@@ -21,7 +21,7 @@ export const MainTabs = () => (
     screenOptions={{
       headerShown: false,
       tabBarStyle: {
-        backgroundColor: COLORS.surface,
+        backgroundColor: COLORS.background,
         borderTopColor: COLORS.border,
         borderTopWidth: 1,
         paddingBottom: 6,
@@ -30,12 +30,12 @@ export const MainTabs = () => (
       },
       tabBarActiveTintColor: COLORS.primary,
       tabBarInactiveTintColor: COLORS.textSecondary,
-      tabBarLabelStyle: { fontSize: 10, fontWeight: '600', marginTop: 2 },
+      tabBarLabelStyle: { fontSize: 11, fontWeight: '600', marginTop: 2 },
     }}
   >
-    <Tab.Screen name="Home" component={HomeScreen} options={{ tabBarLabel: 'HOME', tabBarIcon: ({ color, size }) => <Home color={color} size={size} /> }} />
-    <Tab.Screen name="Leave" component={LeaveScreen} options={{ tabBarLabel: 'LEAVES', tabBarIcon: ({ color, size }) => <Calendar color={color} size={size} /> }} />
-    <Tab.Screen name="Attendance" component={AttendanceScreen} options={{ tabBarLabel: 'ATTENDANCE', tabBarIcon: ({ color, size }) => <Clock color={color} size={size} /> }} />
-    <Tab.Screen name="Profile" component={ProfileScreen} options={{ tabBarLabel: 'PROFILE', tabBarIcon: ({ color, size }) => <User color={color} size={size} /> }} />
+    <Tab.Screen name="Home" component={HomeScreen} options={{ tabBarLabel: 'Home', tabBarIcon: ({ color, size }) => <Home color={color} size={size} /> }} />
+    <Tab.Screen name="Leave" component={LeaveScreen} options={{ tabBarLabel: 'Leaves', tabBarIcon: ({ color, size }) => <Calendar color={color} size={size} /> }} />
+    <Tab.Screen name="Attendance" component={AttendanceScreen} options={{ tabBarLabel: 'Attendance', tabBarIcon: ({ color, size }) => <Clock color={color} size={size} /> }} />
+    <Tab.Screen name="Profile" component={ProfileScreen} options={{ tabBarLabel: 'Profile', tabBarIcon: ({ color, size }) => <User color={color} size={size} /> }} />
   </Tab.Navigator>
 );

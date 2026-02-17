@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   backBtn: { marginRight: THEME.spacing.md },
   title: { fontSize: 18, fontWeight: '600', color: COLORS.textPrimary, flex: 1 },
   badge: { backgroundColor: COLORS.primary, minWidth: 22, height: 22, borderRadius: 11, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 6 },
-  badgeText: { fontSize: 12, fontWeight: '700', color: COLORS.textPrimary },
+  badgeText: { fontSize: 12, fontWeight: '700', color: COLORS.onPrimary },
   content: { padding: THEME.spacing.lg, paddingBottom: THEME.spacing.xl },
   card: { marginBottom: THEME.spacing.md },
   cardUnread: { borderLeftWidth: 3, borderLeftColor: COLORS.primary },

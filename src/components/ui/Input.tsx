@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: THEME.spacing.lg,
     borderWidth: 1,
     borderColor: COLORS.border,
+    minHeight: 48,
   },
   input: { flex: 1, ...THEME.typography.body, color: COLORS.textPrimary, paddingVertical: THEME.spacing.md },
   iconLeft: { marginRight: THEME.spacing.sm },

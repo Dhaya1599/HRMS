@@ -150,7 +150,7 @@ export function ProfileScreen({ navigation }: { navigation?: { goBack?: () => vo
               <UserIcon size={44} color={COLORS.primary} />
             </View>
             <View style={styles.verifiedBadge}>
-              <Check size={14} color={COLORS.background} strokeWidth={3} />
+              <Check size={14} color={COLORS.onPrimary} strokeWidth={3} />
             </View>
           </View>
           <Text style={styles.name}>{user.name}</Text>
@@ -251,7 +251,7 @@ export function ProfileScreen({ navigation }: { navigation?: { goBack?: () => vo
             <Bell size={20} color={COLORS.primary} />
             <Text style={styles.actionText}>Notifications</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.actionRow, styles.actionRowBorder]} onPress={() => nav?.navigate?.('Geofencing')}>
+          <TouchableOpacity style={[styles.actionRow, styles.actionRowBorder]} onPress={() => nav?.navigate?.('Leave')}>
             <Map size={20} color={COLORS.primary} />
             <Text style={styles.actionText}>Work locations</Text>
           </TouchableOpacity>
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
     paddingVertical: THEME.spacing.xs,
     borderRadius: THEME.borderRadius.md,
   },
-  employeeIdText: { fontSize: 11, fontWeight: '600', color: COLORS.background },
+  employeeIdText: { fontSize: 11, fontWeight: '600', color: COLORS.onPrimary },
   card: { marginHorizontal: SCREEN_PAD, marginBottom: THEME.spacing.md },
   sectionTitle: {
     fontSize: 10,

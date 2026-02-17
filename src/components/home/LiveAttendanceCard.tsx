@@ -15,6 +15,19 @@ interface LiveAttendanceCardProps {
 const TARGET_HOURS = 9;
 const TARGET_MINUTES = 0;
 
+function formatTimeForDisplay(t: string): string {
+  const [h, m] = t.split(':').map(Number);
+  const hour12 = (h ?? 0) % 12 || 12;
+  const ampm = (h ?? 0) >= 12 ? 'PM' : 'AM';
+  return `${hour12}:${String(m ?? 0).padStart(2, '0')} ${ampm}`;
+}
+
+function formatHoursMinutes(hours: number): string {
+  const h = Math.floor(hours);
+  const m = Math.round((hours - h) * 60);
+  return `${h}h ${m}m`;
+}
+
 export const LiveAttendanceCard: React.FC<LiveAttendanceCardProps> = ({
   checkInTime,
   checkOutTime,
@@ -26,38 +39,26 @@ export const LiveAttendanceCard: React.FC<LiveAttendanceCardProps> = ({
   const elapsed = useLiveElapsed(checkInTime ?? undefined, isPunchedIn);
 
   const elapsedParts = elapsed.split(':').map(Number);
-  const elapsedHours = elapsedParts[0] ?? 0;
-  const elapsedMins = (elapsedParts[1] ?? 0) + (elapsedParts[2] ?? 0) / 60;
-  const totalElapsedMinutes = elapsedHours * 60 + elapsedMins;
-  const targetMinutes = TARGET_HOURS * 60 + TARGET_MINUTES;
-  const progressPercent = Math.min(100, Math.round((totalElapsedMinutes / targetMinutes) * 100));
-
-  const shiftStartedText = checkInTime
-    ? `Shift started at ${formatTimeForDisplay(checkInTime)}`
-    : 'Punch in to start your shift';
-
-  function formatTimeForDisplay(t: string): string {
-    const [h, m] = t.split(':').map(Number);
-    const hour12 = (h ?? 0) % 12 || 12;
-    const ampm = (h ?? 0) >= 12 ? 'PM' : 'AM';
-    return `${hour12}:${String(m ?? 0).padStart(2, '0')} ${ampm}`;
-  }
+  const elapsedHours = (elapsedParts[0] ?? 0) + (elapsedParts[1] ?? 0) / 60 + (elapsedParts[2] ?? 0) / 3600;
+  const todayHours = isPunchedIn ? elapsedHours : (checkInTime && checkOutTime ? 6.75 : 0);
+  const weeklyAvg = 8.2;
 
   return (
     <View style={styles.card}>
-      <Text style={styles.sectionLabel}>LIVE ATTENDANCE</Text>
+      <Text style={styles.sectionLabel}>Attendance Status</Text>
 
       {!checkInTime ? (
         <>
-          <Text style={styles.timer}>00:00:00</Text>
-          <Text style={styles.hrs}>Hrs</Text>
-          <Text style={styles.shiftText}>{shiftStartedText}</Text>
-          <View style={styles.targetRow}>
-            <Text style={styles.targetLabel}>Target: {TARGET_HOURS}h {TARGET_MINUTES}m</Text>
-            <Text style={styles.percent}>0%</Text>
-          </View>
-          <View style={styles.progressTrack}>
-            <View style={[styles.progressFill, { width: '0%' }]} />
+          <Text style={styles.shiftText}>Punch in to start your shift</Text>
+          <View style={styles.statsRow}>
+            <View style={styles.statBox}>
+              <Text style={styles.statLabel}>Today's Hours</Text>
+              <Text style={[styles.statValue, { color: COLORS.info }]}>0h 0m</Text>
+            </View>
+            <View style={styles.statBox}>
+              <Text style={styles.statLabel}>Weekly Avg</Text>
+              <Text style={styles.statValueGrey}>{formatHoursMinutes(weeklyAvg)}</Text>
+            </View>
           </View>
           <TouchableOpacity
             style={[styles.punchButton, loading && styles.punchButtonDisabled]}
@@ -66,10 +67,10 @@ export const LiveAttendanceCard: React.FC<LiveAttendanceCardProps> = ({
             activeOpacity={0.8}
           >
             {loading ? (
-              <ActivityIndicator color={COLORS.textPrimary} />
+              <ActivityIndicator color={COLORS.onPrimary} />
             ) : (
               <>
-                <LogOut size={20} color={COLORS.textPrimary} style={styles.punchIcon} />
+                <LogOut size={20} color={COLORS.onPrimary} style={styles.punchIcon} />
                 <Text style={styles.punchButtonText}>Punch In</Text>
               </>
             )}
@@ -77,17 +78,25 @@ export const LiveAttendanceCard: React.FC<LiveAttendanceCardProps> = ({
         </>
       ) : isPunchedIn ? (
         <>
-          <View style={styles.timerRow}>
-            <Text style={styles.timer}>{elapsed}</Text>
-            <Text style={styles.hrs}>Hrs</Text>
+          <View style={styles.statusRow}>
+            <View style={styles.clockedInRow}>
+              <View style={styles.greenDot} />
+              <Text style={styles.clockedInText}>Clocked In</Text>
+            </View>
+            <View style={styles.entryTimeBlock}>
+              <Text style={styles.entryTime}>{formatTimeForDisplay(checkInTime)}</Text>
+              <Text style={styles.entryLabel}>Entry Time</Text>
+            </View>
           </View>
-          <Text style={styles.shiftText}>{shiftStartedText}</Text>
-          <View style={styles.targetRow}>
-            <Text style={styles.targetLabel}>Target: {TARGET_HOURS}h {TARGET_MINUTES}m</Text>
-            <Text style={styles.percent}>{progressPercent}%</Text>
-          </View>
-          <View style={styles.progressTrack}>
-            <View style={[styles.progressFill, { width: `${progressPercent}%` }]} />
+          <View style={styles.statsRow}>
+            <View style={styles.statBox}>
+              <Text style={styles.statLabel}>Today's Hours</Text>
+              <Text style={[styles.statValue, { color: COLORS.info }]}>{formatHoursMinutes(todayHours)}</Text>
+            </View>
+            <View style={styles.statBox}>
+              <Text style={styles.statLabel}>Weekly Avg</Text>
+              <Text style={styles.statValueGrey}>{formatHoursMinutes(weeklyAvg)}</Text>
+            </View>
           </View>
           <TouchableOpacity
             style={[styles.punchButton, loading && styles.punchButtonDisabled]}
@@ -96,29 +105,46 @@ export const LiveAttendanceCard: React.FC<LiveAttendanceCardProps> = ({
             activeOpacity={0.8}
           >
             {loading ? (
-              <ActivityIndicator color={COLORS.textPrimary} />
+              <ActivityIndicator color={COLORS.onPrimary} />
             ) : (
               <>
-                <LogOut size={20} color={COLORS.textPrimary} style={styles.punchIcon} />
-                <Text style={styles.punchButtonText}>Punch Out</Text>
+                <LogOut size={20} color={COLORS.onPrimary} style={styles.punchIcon} />
+                <Text style={styles.punchButtonText}>Clock Out</Text>
               </>
             )}
           </TouchableOpacity>
         </>
       ) : (
         <>
-          <Text style={styles.timer}>{elapsed}</Text>
-          <Text style={styles.hrs}>Hrs</Text>
-          <Text style={styles.shiftText}>Shift ended</Text>
-          <View style={styles.targetRow}>
-            <Text style={styles.targetLabel}>Target: {TARGET_HOURS}h {TARGET_MINUTES}m</Text>
-            <Text style={styles.percent}>100%</Text>
+          <View style={styles.statusRow}>
+            <Text style={styles.shiftText}>Shift ended</Text>
+            <View style={styles.entryTimeBlock}>
+              <Text style={styles.entryTime}>{checkOutTime ? formatTimeForDisplay(checkOutTime) : '—'}</Text>
+              <Text style={styles.entryLabel}>Exit Time</Text>
+            </View>
           </View>
-          <View style={styles.progressTrack}>
-            <View style={[styles.progressFill, { width: '100%' }]} />
+          <View style={styles.statsRow}>
+            <View style={styles.statBox}>
+              <Text style={styles.statLabel}>Today's Hours</Text>
+              <Text style={[styles.statValue, { color: COLORS.info }]}>
+                {checkInTime && checkOutTime
+                  ? formatHoursMinutes(
+                      (() => {
+                        const [h1, m1] = checkInTime.split(':').map(Number);
+                        const [h2, m2] = checkOutTime.split(':').map(Number);
+                        return (h2 - h1) + (m2 - m1) / 60;
+                      })(),
+                    )
+                  : '0h 0m'}
+              </Text>
+            </View>
+            <View style={styles.statBox}>
+              <Text style={styles.statLabel}>Weekly Avg</Text>
+              <Text style={styles.statValueGrey}>{formatHoursMinutes(weeklyAvg)}</Text>
+            </View>
           </View>
-          <View style={[styles.punchButton, styles.punchButtonDone]}>
-            <Text style={styles.punchButtonText}>Done for today</Text>
+          <View style={styles.punchButtonDone}>
+            <Text style={[styles.punchButtonText, { color: COLORS.textSecondary }]}>Done for today</Text>
           </View>
         </>
       )}
@@ -129,55 +155,76 @@ export const LiveAttendanceCard: React.FC<LiveAttendanceCardProps> = ({
 const styles = StyleSheet.create({
   card: {
     backgroundColor: COLORS.surface,
-    borderRadius: THEME.borderRadius.md,
-    padding: THEME.spacing.md,
-    marginBottom: THEME.spacing.sm,
+    borderRadius: THEME.borderRadius.lg,
+    padding: THEME.spacing.lg,
+    marginBottom: THEME.spacing.lg,
+    borderWidth: 1,
+    borderColor: COLORS.borderLight,
   },
   sectionLabel: {
-    fontSize: 10,
+    fontSize: 14,
     fontWeight: '600',
-    color: COLORS.primary,
-    letterSpacing: 0.5,
-    marginBottom: THEME.spacing.sm,
+    color: COLORS.textPrimary,
+    marginBottom: THEME.spacing.md,
   },
-  timerRow: { flexDirection: 'row', alignItems: 'baseline' },
-  timer: {
-    fontSize: 30,
+  statusRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: THEME.spacing.md,
+  },
+  clockedInRow: { flexDirection: 'row', alignItems: 'center' },
+  greenDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: COLORS.success,
+    marginRight: THEME.spacing.sm,
+  },
+  clockedInText: {
+    fontSize: 15,
     fontWeight: '700',
     color: COLORS.textPrimary,
-    letterSpacing: 1,
   },
-  hrs: {
-    fontSize: 14,
-    color: COLORS.textPrimary,
-    marginLeft: THEME.spacing.sm,
-    fontWeight: '500',
+  entryTimeBlock: { alignItems: 'flex-end' },
+  entryTime: {
+    fontSize: 22,
+    fontWeight: '700',
+    color: COLORS.primary,
+  },
+  entryLabel: {
+    fontSize: 12,
+    color: COLORS.textSecondary,
+    marginTop: 2,
   },
   shiftText: {
     fontSize: 13,
     color: COLORS.textSecondary,
-    marginTop: THEME.spacing.xs,
-    marginBottom: THEME.spacing.md,
   },
-  targetRow: {
+  statsRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: THEME.spacing.xs,
+    gap: THEME.spacing.md,
+    marginBottom: THEME.spacing.lg,
   },
-  targetLabel: { fontSize: 11, color: COLORS.textSecondary },
-  percent: { fontSize: 11, color: COLORS.textPrimary, fontWeight: '600' },
-  progressTrack: {
-    height: 5,
-    backgroundColor: COLORS.border,
-    borderRadius: 3,
-    overflow: 'hidden',
-    marginBottom: THEME.spacing.md,
+  statBox: {
+    flex: 1,
+    backgroundColor: COLORS.backgroundSecondary,
+    borderRadius: THEME.borderRadius.md,
+    padding: THEME.spacing.md,
   },
-  progressFill: {
-    height: '100%',
-    backgroundColor: COLORS.primary,
-    borderRadius: 3,
+  statLabel: {
+    fontSize: 11,
+    color: COLORS.textSecondary,
+    marginBottom: 4,
+  },
+  statValue: {
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  statValueGrey: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: COLORS.textPrimary,
   },
   punchButton: {
     flexDirection: 'row',
@@ -188,11 +235,16 @@ const styles = StyleSheet.create({
     borderRadius: THEME.borderRadius.md,
   },
   punchButtonDisabled: { opacity: 0.7 },
-  punchButtonDone: { backgroundColor: COLORS.success },
+  punchButtonDone: {
+    backgroundColor: COLORS.surfaceVariant,
+    paddingVertical: THEME.spacing.md,
+    borderRadius: THEME.borderRadius.md,
+    alignItems: 'center',
+  },
   punchIcon: { marginRight: THEME.spacing.sm },
   punchButtonText: {
     fontSize: 16,
     fontWeight: '700',
-    color: COLORS.textPrimary,
+    color: COLORS.onPrimary,
   },
 });

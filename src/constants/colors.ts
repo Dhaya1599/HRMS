@@ -1,31 +1,37 @@
 /**
- * HRMS dark theme — reference UI: dark background, orange accent.
- * Background: #1C1C1E / #1E140F, Card: #2C2C2C, Primary: #FD7A2E
+ * HRMS light theme — professional UI: white/light grey background, orange accent.
+ * Background: #FFFFFF / #F8F9FB, Surface: #FFFFFF, Primary: #FD7A2E
  */
 export const COLORS = {
   primary: '#FD7A2E',
-  background: '#1C1C1E',
-  backgroundDark: '#1E140F',
-  surface: '#2C2C2C',
-  surfaceVariant: '#332118',
-  inputBg: '#40291D',
-  textPrimary: '#FFFFFF',
-  textSecondary: '#CCCCCC',
-  textTertiary: '#999999',
+  background: '#FFFFFF',
+  backgroundSecondary: '#F8F9FB',
+  surface: '#FFFFFF',
+  surfaceVariant: '#F0F0F0',
+  inputBg: '#FFFFFF',
+  textPrimary: '#1A1A1D',
+  textSecondary: '#6B7280',
+  textTertiary: '#9CA3AF',
   success: '#4CAF50',
   warning: '#FF8C00',
   error: '#F44336',
-  info: '#3b82f6',
-  border: '#3D3D3D',
-  borderLight: '#4A4A4A',
-  disabled: '#5A5A5A',
+  info: '#3B82F6',
+  border: '#E5E7EB',
+  borderLight: '#F3F4F6',
+  disabled: '#D1D5DB',
   inTime: '#4CAF50',
-  outTime: '#94a3b8',
+  outTime: '#6B7280',
   pending: '#FD7A2E',
   approved: '#4CAF50',
   rejected: '#F44336',
-  onLeave: '#a78bfa',
+  onLeave: '#8B5CF6',
   shadowColor: '#000000',
+  /** Use on primary buttons and orange surfaces for contrast */
+  onPrimary: '#FFFFFF',
+  /** Leave/status accents */
+  leaveAnnual: '#3B82F6',
+  leaveSick: '#EF4444',
+  leaveCasual: '#EAB308',
 };
 
 export const THEME = {
@@ -56,8 +62,8 @@ export const THEME = {
     caption: { fontSize: 12, fontWeight: '400' as const, lineHeight: 18 },
   },
   shadows: {
-    sm: { shadowColor: COLORS.shadowColor, shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.15, shadowRadius: 4, elevation: 3 },
-    md: { shadowColor: COLORS.shadowColor, shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.2, shadowRadius: 8, elevation: 5 },
-    lg: { shadowColor: COLORS.shadowColor, shadowOffset: { width: 0, height: 8 }, shadowOpacity: 0.25, shadowRadius: 16, elevation: 8 },
+    sm: { shadowColor: COLORS.shadowColor, shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.06, shadowRadius: 4, elevation: 2 },
+    md: { shadowColor: COLORS.shadowColor, shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.08, shadowRadius: 8, elevation: 4 },
+    lg: { shadowColor: COLORS.shadowColor, shadowOffset: { width: 0, height: 8 }, shadowOpacity: 0.1, shadowRadius: 16, elevation: 8 },
   },
 };

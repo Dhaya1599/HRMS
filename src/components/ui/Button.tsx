@@ -61,7 +61,7 @@ const getStyles = (variant: string, size: string, fullWidth: boolean) => {
     large: { paddingVertical: THEME.spacing.lg, paddingHorizontal: THEME.spacing.xxl },
   };
   const variantStyle = {
-    primary: { button: { backgroundColor: COLORS.primary }, text: { color: COLORS.background } },
+    primary: { button: { backgroundColor: COLORS.primary }, text: { color: COLORS.onPrimary } },
     secondary: { button: { backgroundColor: COLORS.surfaceVariant }, text: { color: COLORS.textPrimary } },
     danger: { button: { backgroundColor: COLORS.error }, text: { color: COLORS.textPrimary } },
     outline: { button: { backgroundColor: 'transparent', borderWidth: 1, borderColor: COLORS.primary }, text: { color: COLORS.primary } },

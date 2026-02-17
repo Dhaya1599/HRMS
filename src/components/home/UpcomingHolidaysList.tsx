@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { COLORS, THEME } from '@constants/colors';
-import { CalendarCheck } from 'lucide-react-native';
+import { ChevronRight } from 'lucide-react-native';
 
 export interface HolidayItem {
   date: string;
@@ -26,26 +26,31 @@ export const UpcomingHolidaysList: React.FC<UpcomingHolidaysListProps> = ({
     <View style={styles.section}>
       <View style={styles.header}>
         <Text style={styles.sectionTitle}>Upcoming Holidays</Text>
-        <TouchableOpacity onPress={onViewCalendar}>
-          <Text style={styles.actionLink}>View Calendar</Text>
-        </TouchableOpacity>
+        {onViewCalendar != null && (
+          <TouchableOpacity onPress={onViewCalendar}>
+            <Text style={styles.actionLink}>View Calendar</Text>
+          </TouchableOpacity>
+        )}
       </View>
-      {upcoming.map((h) => {
+      {upcoming.map((h, index) => {
         const d = new Date(h.date);
         const month = d.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
         const day = d.getDate();
         const weekday = d.toLocaleDateString('en-US', { weekday: 'long' });
+        const isOrange = index % 2 === 0;
+        const dateAccent = isOrange ? COLORS.primary : COLORS.info;
+        const dateBg = isOrange ? '#FEE7D6' : '#EFF6FF';
         return (
           <View key={h.date} style={styles.row}>
-            <View style={styles.dateBlock}>
+            <View style={[styles.dateBlock, { backgroundColor: dateBg }]}>
               <Text style={styles.dateMonth}>{month}</Text>
-              <Text style={styles.dateDay}>{day}</Text>
+              <Text style={[styles.dateDay, { color: dateAccent }]}>{day}</Text>
             </View>
             <View style={styles.details}>
               <Text style={styles.name}>{h.name}</Text>
-              <Text style={styles.meta}>{weekday} • Gazetted Holiday</Text>
+              <Text style={styles.meta}>Public Holiday • {weekday}</Text>
             </View>
-            <CalendarCheck size={20} color={COLORS.textSecondary} />
+            <ChevronRight size={20} color={COLORS.textTertiary} />
           </View>
         );
       })}
@@ -54,7 +59,7 @@ export const UpcomingHolidaysList: React.FC<UpcomingHolidaysListProps> = ({
 };
 
 const styles = StyleSheet.create({
-  section: { marginBottom: THEME.spacing.md },
+  section: { marginBottom: THEME.spacing.lg },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -75,25 +80,28 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: COLORS.surface,
-    borderRadius: THEME.borderRadius.md,
+    borderRadius: THEME.borderRadius.lg,
     padding: THEME.spacing.md,
-    marginBottom: THEME.spacing.xs,
+    marginBottom: THEME.spacing.sm,
+    borderWidth: 1,
+    borderColor: COLORS.borderLight,
   },
   dateBlock: {
-    width: 40,
+    width: 48,
+    paddingVertical: THEME.spacing.sm,
+    borderRadius: THEME.borderRadius.md,
     alignItems: 'center',
     marginRight: THEME.spacing.md,
   },
   dateMonth: {
     fontSize: 10,
     fontWeight: '600',
-    color: COLORS.primary,
+    color: COLORS.textSecondary,
     letterSpacing: 0.5,
   },
   dateDay: {
     fontSize: 18,
     fontWeight: '700',
-    color: COLORS.textPrimary,
   },
   details: { flex: 1 },
   name: {

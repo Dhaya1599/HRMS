@@ -7,9 +7,11 @@ import {
   Modal,
   Pressable,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { COLORS, THEME } from '@constants/colors';
 import { User, Bell, Settings, LogOut } from 'lucide-react-native';
 import { useAuth } from '@context/AuthContext';
+import { MOCK_UNREAD_COUNT } from '../../data/mockData';
 
 interface HomeHeaderGreetingProps {
   userName: string;
@@ -22,38 +24,44 @@ export const HomeHeaderGreeting: React.FC<HomeHeaderGreetingProps> = ({
   designation = 'Product Designer',
   location = 'HQ Office',
 }) => {
+  const navigation = useNavigation();
   const { logout } = useAuth();
   const [menuVisible, setMenuVisible] = useState(false);
 
-  const firstName = userName?.split(' ')[0] ?? 'there';
+  const displayName = userName || 'Alex Thompson';
   const hour = new Date().getHours();
-  const greeting = hour < 12 ? 'Good Morning' : hour < 17 ? 'Good Afternoon' : 'Good Evening';
+  const greeting = hour < 12 ? 'GOOD MORNING' : hour < 17 ? 'GOOD AFTERNOON' : 'GOOD EVENING';
 
   const handleLogout = () => {
     setMenuVisible(false);
     logout();
   };
 
+  const hasNotifications = MOCK_UNREAD_COUNT > 0;
+
   return (
     <View style={styles.container}>
       <View style={styles.left}>
         <View style={styles.avatarWrap}>
           <View style={styles.avatar}>
-            <User size={24} color={COLORS.primary} />
+            <User size={24} color={COLORS.textSecondary} />
           </View>
-          <View style={styles.statusDot} />
         </View>
         <View style={styles.textWrap}>
-          <Text style={styles.greeting}>{greeting}, {firstName}</Text>
-          <Text style={styles.sub}>{designation} • {location}</Text>
+          <Text style={styles.greeting}>{greeting}</Text>
+          <Text style={styles.name}>{displayName}</Text>
         </View>
       </View>
       <View style={styles.actions}>
-        <TouchableOpacity style={styles.iconBtn}>
-          <Bell size={20} color={COLORS.textPrimary} />
-        </TouchableOpacity>
         <TouchableOpacity
           style={styles.iconBtn}
+          onPress={() => navigation.navigate('Notifications' as never)}
+        >
+          <Bell size={22} color={COLORS.textSecondary} />
+          {hasNotifications && <View style={styles.bellDot} />}
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.iconBtnOutline}
           onPress={() => setMenuVisible(true)}
           activeOpacity={0.8}
         >
@@ -92,49 +100,60 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: THEME.spacing.lg,
     paddingVertical: THEME.spacing.md,
+    backgroundColor: COLORS.background,
   },
   left: { flexDirection: 'row', alignItems: 'center', flex: 1 },
-  avatarWrap: { position: 'relative', marginRight: THEME.spacing.sm },
+  avatarWrap: { marginRight: THEME.spacing.md },
   avatar: {
-    width: 42,
-    height: 42,
-    borderRadius: 21,
-    backgroundColor: COLORS.surface,
-    borderWidth: 2,
-    borderColor: COLORS.primary,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: '#FEE7D6',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  statusDot: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: COLORS.success,
-    borderWidth: 2,
-    borderColor: COLORS.background,
   },
   textWrap: { flex: 1 },
   greeting: {
-    fontSize: 16,
+    fontSize: 12,
+    fontWeight: '600',
+    color: COLORS.textSecondary,
+    letterSpacing: 0.5,
+  },
+  name: {
+    fontSize: 17,
     fontWeight: '700',
     color: COLORS.textPrimary,
+    marginTop: 2,
   },
-  sub: {
-    fontSize: 12,
-    color: COLORS.textSecondary,
-    marginTop: 1,
-  },
-  actions: { flexDirection: 'row', gap: THEME.spacing.xs },
+  actions: { flexDirection: 'row', alignItems: 'center', gap: THEME.spacing.sm },
   iconBtn: {
-    width: 38,
-    height: 38,
-    borderRadius: 19,
-    backgroundColor: COLORS.primary,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: COLORS.surfaceVariant,
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'relative',
+  },
+  iconBtnOutline: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  bellDot: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: COLORS.primary,
+    borderWidth: 1.5,
+    borderColor: COLORS.background,
   },
   menuBackdrop: {
     flex: 1,

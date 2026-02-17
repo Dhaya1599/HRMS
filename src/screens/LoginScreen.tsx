@@ -130,7 +130,7 @@ export function LoginScreen() {
               loading={state.isLoading}
               disabled={state.isLoading}
               fullWidth
-              icon={<View style={styles.shieldCheck}><Shield size={16} color={COLORS.background} strokeWidth={2.5} /></View>}
+              icon={<View style={styles.shieldCheck}><Shield size={16} color={COLORS.onPrimary} strokeWidth={2.5} /></View>}
               style={styles.secureButton}
             />
             <Button
@@ -161,7 +161,7 @@ export function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: COLORS.backgroundDark },
+  container: { flex: 1, backgroundColor: COLORS.background },
   keyboardView: { flex: 1 },
   scrollContent: {
     flexGrow: 1,
@@ -174,21 +174,21 @@ const styles = StyleSheet.create({
     width: 72,
     height: 72,
     borderRadius: 36,
-    borderWidth: 1,
-    borderColor: COLORS.textSecondary,
+    backgroundColor: '#FEE7D6',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: THEME.spacing.md,
+    ...THEME.shadows.sm,
   },
   portalTitle: {
     fontSize: 16,
     fontWeight: '700',
-    color: COLORS.primary,
+    color: COLORS.textPrimary,
     letterSpacing: 1.5,
   },
   welcomeSection: { marginBottom: THEME.spacing.xl },
   welcomeImagePlaceholder: {
-    backgroundColor: COLORS.surfaceVariant,
+    backgroundColor: '#FEE7D6',
     borderRadius: THEME.borderRadius.lg,
     paddingVertical: THEME.spacing.xxl,
     paddingHorizontal: THEME.spacing.lg,
@@ -204,14 +204,14 @@ const styles = StyleSheet.create({
   },
   welcomeSubtitle: {
     fontSize: 14,
-    color: COLORS.primary,
+    color: COLORS.textSecondary,
     fontWeight: '500',
   },
   formSection: { marginBottom: THEME.spacing.xxl },
   inputLabel: {
     fontSize: 11,
     fontWeight: '600',
-    color: COLORS.primary,
+    color: COLORS.textPrimary,
     letterSpacing: 0.5,
     marginBottom: THEME.spacing.sm,
   },
@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
     borderRadius: THEME.borderRadius.md,
     marginBottom: THEME.spacing.lg,
   },
-  errorText: { fontSize: 14, color: COLORS.textPrimary },
+  errorText: { fontSize: 14, color: COLORS.onPrimary },
   secureButton: { marginTop: THEME.spacing.sm, marginBottom: THEME.spacing.md },
   shieldCheck: { marginRight: THEME.spacing.sm },
   demoButton: {},
@@ -247,6 +247,6 @@ const styles = StyleSheet.create({
   footerText: { fontSize: 13, color: COLORS.textSecondary, marginBottom: THEME.spacing.md },
   footerLink: { color: COLORS.primary, fontWeight: '600', textDecorationLine: 'underline' },
   legalRow: { flexDirection: 'row', alignItems: 'center' },
-  legalLink: { fontSize: 11, color: COLORS.textSecondary, letterSpacing: 0.5 },
-  legalSpacer: { color: COLORS.textSecondary },
+  legalLink: { fontSize: 11, color: COLORS.textTertiary, letterSpacing: 0.5 },
+  legalSpacer: { color: COLORS.textTertiary },
 });

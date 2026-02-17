@@ -16,10 +16,10 @@ export const Card: React.FC<CardProps> = ({ children, style, elevation = 'sm' })
 const styles = StyleSheet.create({
   card: {
     backgroundColor: COLORS.surface,
-    borderRadius: THEME.borderRadius.md,
+    borderRadius: THEME.borderRadius.lg,
     padding: THEME.spacing.md,
     marginVertical: THEME.spacing.xs,
     borderWidth: 1,
-    borderColor: COLORS.border,
+    borderColor: COLORS.borderLight,
   },
 });

@@ -132,6 +132,6 @@ const styles = StyleSheet.create({
   primaryBtnText: {
     fontSize: 15,
     fontWeight: '600',
-    color: COLORS.textPrimary,
+    color: COLORS.onPrimary,
   },
 });
