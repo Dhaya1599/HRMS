@@ -100,9 +100,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const logout = async () => {
-    dispatch({ type: 'SET_LOADING', payload: true });
-    await secureStorage.clear();
-    await appStorage.remove(STORAGE_KEYS.USER_DATA);
+    // No backend or storage usage for now — just redirect to login screen
     dispatch({ type: 'LOGOUT' });
   };
 

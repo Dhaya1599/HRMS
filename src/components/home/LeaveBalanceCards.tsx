@@ -48,7 +48,7 @@ export const LeaveBalanceCards: React.FC<LeaveBalanceCardsProps> = ({
 };
 
 const styles = StyleSheet.create({
-  section: { marginBottom: THEME.spacing.lg },
+  section: { marginBottom: THEME.spacing.md },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',

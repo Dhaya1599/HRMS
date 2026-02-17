@@ -1,7 +1,15 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Modal,
+  Pressable,
+} from 'react-native';
 import { COLORS, THEME } from '@constants/colors';
-import { User, Bell, Settings } from 'lucide-react-native';
+import { User, Bell, Settings, LogOut } from 'lucide-react-native';
+import { useAuth } from '@context/AuthContext';
 
 interface HomeHeaderGreetingProps {
   userName: string;
@@ -14,9 +22,17 @@ export const HomeHeaderGreeting: React.FC<HomeHeaderGreetingProps> = ({
   designation = 'Product Designer',
   location = 'HQ Office',
 }) => {
+  const { logout } = useAuth();
+  const [menuVisible, setMenuVisible] = useState(false);
+
   const firstName = userName?.split(' ')[0] ?? 'there';
   const hour = new Date().getHours();
   const greeting = hour < 12 ? 'Good Morning' : hour < 17 ? 'Good Afternoon' : 'Good Evening';
+
+  const handleLogout = () => {
+    setMenuVisible(false);
+    logout();
+  };
 
   return (
     <View style={styles.container}>
@@ -36,10 +52,35 @@ export const HomeHeaderGreeting: React.FC<HomeHeaderGreetingProps> = ({
         <TouchableOpacity style={styles.iconBtn}>
           <Bell size={20} color={COLORS.textPrimary} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.iconBtn}>
+        <TouchableOpacity
+          style={styles.iconBtn}
+          onPress={() => setMenuVisible(true)}
+          activeOpacity={0.8}
+        >
           <Settings size={20} color={COLORS.textPrimary} />
         </TouchableOpacity>
       </View>
+
+      <Modal
+        visible={menuVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setMenuVisible(false)}
+      >
+        <Pressable style={styles.menuBackdrop} onPress={() => setMenuVisible(false)}>
+          <View style={styles.menuAnchor} />
+        </Pressable>
+        <View style={styles.menuBox}>
+          <TouchableOpacity
+            style={styles.menuItem}
+            onPress={handleLogout}
+            activeOpacity={0.7}
+          >
+            <LogOut size={18} color={COLORS.error} />
+            <Text style={styles.menuItemText}>Logout</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -94,5 +135,39 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  menuBackdrop: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.3)',
+  },
+  menuAnchor: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    width: 100,
+    height: 80,
+  },
+  menuBox: {
+    position: 'absolute',
+    top: 56,
+    right: THEME.spacing.lg,
+    minWidth: 140,
+    backgroundColor: COLORS.surface,
+    borderRadius: THEME.borderRadius.md,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    ...THEME.shadows.md,
+  },
+  menuItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: THEME.spacing.sm,
+    paddingVertical: THEME.spacing.md,
+    paddingHorizontal: THEME.spacing.lg,
+  },
+  menuItemText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: COLORS.textPrimary,
   },
 });

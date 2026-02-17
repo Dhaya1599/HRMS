@@ -40,7 +40,7 @@ export const AnnouncementsBlock: React.FC<AnnouncementsBlockProps> = ({
 );
 
 const styles = StyleSheet.create({
-  section: { paddingHorizontal: THEME.spacing.lg, marginBottom: THEME.spacing.lg },
+  section: { marginBottom: THEME.spacing.md },
   sectionTitle: {
     ...THEME.typography.caption,
     color: COLORS.textSecondary,

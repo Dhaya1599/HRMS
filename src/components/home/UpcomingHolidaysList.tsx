@@ -11,43 +11,50 @@ export interface HolidayItem {
 interface UpcomingHolidaysListProps {
   holidays: HolidayItem[];
   onViewCalendar?: () => void;
+  maxItems?: number;
 }
 
 export const UpcomingHolidaysList: React.FC<UpcomingHolidaysListProps> = ({
   holidays,
   onViewCalendar,
-}) => (
-  <View style={styles.section}>
-    <View style={styles.header}>
-      <Text style={styles.sectionTitle}>Upcoming Holidays</Text>
-      <TouchableOpacity onPress={onViewCalendar}>
-        <Text style={styles.actionLink}>View Calendar</Text>
-      </TouchableOpacity>
+  maxItems = 5,
+}) => {
+  const sorted = [...holidays].sort((a, b) => a.date.localeCompare(b.date));
+  const today = new Date().toISOString().slice(0, 10);
+  const upcoming = sorted.filter((h) => h.date >= today).slice(0, maxItems);
+  return (
+    <View style={styles.section}>
+      <View style={styles.header}>
+        <Text style={styles.sectionTitle}>Upcoming Holidays</Text>
+        <TouchableOpacity onPress={onViewCalendar}>
+          <Text style={styles.actionLink}>View Calendar</Text>
+        </TouchableOpacity>
+      </View>
+      {upcoming.map((h) => {
+        const d = new Date(h.date);
+        const month = d.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
+        const day = d.getDate();
+        const weekday = d.toLocaleDateString('en-US', { weekday: 'long' });
+        return (
+          <View key={h.date} style={styles.row}>
+            <View style={styles.dateBlock}>
+              <Text style={styles.dateMonth}>{month}</Text>
+              <Text style={styles.dateDay}>{day}</Text>
+            </View>
+            <View style={styles.details}>
+              <Text style={styles.name}>{h.name}</Text>
+              <Text style={styles.meta}>{weekday} • Gazetted Holiday</Text>
+            </View>
+            <CalendarCheck size={20} color={COLORS.textSecondary} />
+          </View>
+        );
+      })}
     </View>
-    {holidays.slice(0, 5).map((h) => {
-      const d = new Date(h.date);
-      const month = d.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
-      const day = d.getDate();
-      const weekday = d.toLocaleDateString('en-US', { weekday: 'long' });
-      return (
-        <View key={h.date} style={styles.row}>
-          <View style={styles.dateBlock}>
-            <Text style={styles.dateMonth}>{month}</Text>
-            <Text style={styles.dateDay}>{day}</Text>
-          </View>
-          <View style={styles.details}>
-            <Text style={styles.name}>{h.name}</Text>
-            <Text style={styles.meta}>{weekday} • Gazetted Holiday</Text>
-          </View>
-          <CalendarCheck size={20} color={COLORS.textSecondary} />
-        </View>
-      );
-    })}
-  </View>
-);
+  );
+};
 
 const styles = StyleSheet.create({
-  section: { marginBottom: THEME.spacing.lg },
+  section: { marginBottom: THEME.spacing.md },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',

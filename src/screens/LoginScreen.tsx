@@ -10,6 +10,7 @@ import {
   Platform,
   TouchableOpacity,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '@context/AuthContext';
 import { Input } from '@components/ui/Input';
 import { Button } from '@components/ui/Button';
@@ -18,6 +19,7 @@ import { COLORS, THEME } from '@constants/colors';
 import { Lock, Mail, Shield, Eye, EyeOff } from 'lucide-react-native';
 
 export function LoginScreen() {
+  const navigation = useNavigation();
   const { state, login, loginDemo } = useAuth();
   const [employeeId, setEmployeeId] = useState('');
   const [password, setPassword] = useState('');
@@ -93,7 +95,7 @@ export function LoginScreen() {
             />
             <View style={styles.passwordRow}>
               <Text style={styles.inputLabel}>PASSWORD</Text>
-              <TouchableOpacity onPress={() => {}}>
+              <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword' as never)}>
                 <Text style={styles.forgotLink}>FORGOT?</Text>
               </TouchableOpacity>
             </View>

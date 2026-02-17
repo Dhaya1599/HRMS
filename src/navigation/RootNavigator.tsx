@@ -4,7 +4,7 @@ import { useAuth } from '@context/AuthContext';
 import { AttendanceProvider } from '@context/AttendanceContext';
 import { COLORS } from '@constants/colors';
 import { AuthStack } from './AuthStack';
-import { MainTabs } from './MainTabs';
+import { MainStack } from './MainStack';
 
 export const RootNavigator = () => {
   const { state } = useAuth();
@@ -23,7 +23,7 @@ export const RootNavigator = () => {
 
   return (
     <AttendanceProvider>
-      <MainTabs />
+      <MainStack />
     </AttendanceProvider>
   );
 };

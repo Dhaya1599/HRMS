@@ -80,11 +80,10 @@ export const attendanceApi = {
     return { success: true, data: getMockTodayAttendance() };
   },
   async getAttendanceHistory(
-    page: number = 1,
-    pageSize: number = 20
+    _page: number = 1,
+    pageSize: number = 100
   ): Promise<ApiResponse<{ records: AttendanceRecord[]; total: number }>> {
-    const start = (page - 1) * pageSize;
-    const records = MOCK_ATTENDANCE_RECORDS.slice(start, start + pageSize) as AttendanceRecord[];
+    const records = MOCK_ATTENDANCE_RECORDS.slice(0, pageSize) as AttendanceRecord[];
     return { success: true, data: { records, total: MOCK_ATTENDANCE_RECORDS.length } };
   },
   async getAttendanceDetails(id: string): Promise<ApiResponse<AttendanceRecord>> {

@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
-import { View, FlatList, StyleSheet, SafeAreaView, Text, RefreshControl, Alert } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
+import { View, FlatList, StyleSheet, SafeAreaView, Text, RefreshControl, Alert, TouchableOpacity } from 'react-native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useAuth } from '@context/AuthContext';
 import { Card } from '@components/ui/Card';
 import { Loading } from '@components/ui/Loading';
@@ -8,7 +8,7 @@ import { Badge } from '@components/ui/Badge';
 import { COLORS, THEME } from '@constants/colors';
 import { teamApi, TeamMember } from '@api/team';
 import { formatTime } from '@utils/formatters';
-import { Clock, User, Building } from 'lucide-react-native';
+import { Clock, User, Building, ArrowLeft } from 'lucide-react-native';
 
 function getStatusLabel(status?: string): string {
   if (status === 'in') return 'In';
@@ -25,10 +25,12 @@ function getStatusVariant(status?: string): 'success' | 'warning' | 'error' | 'i
 }
 
 export function TeamScreen() {
+  const navigation = useNavigation();
   const { state: authState } = useAuth();
   const [members, setMembers] = useState<TeamMember[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const canGoBack = navigation.canGoBack?.() ?? false;
 
   const loadTeamMembers = useCallback(async () => {
     try {
@@ -105,11 +107,17 @@ export function TeamScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+      {canGoBack && (
+        <TouchableOpacity style={styles.header} onPress={() => navigation.goBack()}>
+          <ArrowLeft size={22} color={COLORS.primary} />
+          <Text style={styles.headerTitle}>Team</Text>
+        </TouchableOpacity>
+      )}
       <FlatList
         data={members}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={members.length === 0 ? styles.emptyContainer : styles.listContent}
+        contentContainerStyle={[members.length === 0 ? styles.emptyContainer : styles.listContent, canGoBack && { paddingTop: 0 }]}
         ListEmptyComponent={<Text style={styles.emptyText}>No team members.</Text>}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={COLORS.primary} />}
       />
@@ -119,6 +127,8 @@ export function TeamScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: COLORS.background },
+  header: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: THEME.spacing.lg, paddingVertical: THEME.spacing.md, borderBottomWidth: 1, borderBottomColor: COLORS.border },
+  headerTitle: { fontSize: 18, fontWeight: '600', color: COLORS.textPrimary, marginLeft: THEME.spacing.md },
   listContent: { padding: THEME.spacing.lg, paddingBottom: THEME.spacing.xxl },
   emptyContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: THEME.spacing.xl },
   emptyText: { ...THEME.typography.body, color: COLORS.textSecondary, textAlign: 'center' },

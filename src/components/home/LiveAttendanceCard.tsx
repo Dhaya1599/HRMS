@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.surface,
     borderRadius: THEME.borderRadius.md,
     padding: THEME.spacing.md,
-    marginBottom: THEME.spacing.md,
+    marginBottom: THEME.spacing.sm,
   },
   sectionLabel: {
     fontSize: 10,
