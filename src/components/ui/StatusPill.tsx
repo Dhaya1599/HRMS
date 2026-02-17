@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { COLORS, THEME } from '@constants/colors';
+import { View, Text } from 'react-native';
+import { COLORS } from '@constants/colors';
+import { styles } from '@styles/components/StatusPillStyles';
 
 type Variant = 'approved' | 'pending' | 'rejected' | 'onTime' | 'late' | 'absent';
 
@@ -26,15 +27,3 @@ export const StatusPill: React.FC<StatusPillProps> = ({ label, variant }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  pill: {
-    paddingHorizontal: THEME.spacing.md,
-    paddingVertical: THEME.spacing.xs,
-    borderRadius: THEME.borderRadius.full,
-  },
-  text: {
-    fontSize: 11,
-    fontWeight: '600',
-  },
-});

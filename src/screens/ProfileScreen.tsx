@@ -2,7 +2,6 @@ import React, {useState, useCallback} from 'react';
 import {
   View,
   ScrollView,
-  StyleSheet,
   SafeAreaView,
   Text,
   TouchableOpacity,
@@ -14,8 +13,9 @@ import {useAuth} from '@context/AuthContext';
 import {Card} from '@components/ui/Card';
 import {Modal} from '@components/ui/Modal';
 import {Input} from '@components/ui/Input';
-import {ScreenTitle, SCREEN_PAD} from '@components/ui/ScreenTitle';
-import {COLORS, THEME} from '@constants/colors';
+import {ScreenTitle} from '@components/ui/ScreenTitle';
+import {COLORS} from '@constants/colors';
+import { styles } from '@styles/screens/ProfileScreenStyles';
 import {MOCK_PROFILE_EXTENDED} from '../data/mockData';
 import {
   User as UserIcon,
@@ -347,139 +347,3 @@ export function ProfileScreen({
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: COLORS.background},
-  scrollContent: {paddingBottom: THEME.spacing.xl},
-  profileOverview: {
-    alignItems: 'center',
-    paddingVertical: THEME.spacing.lg,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.border,
-  },
-  avatarWrapper: {position: 'relative', marginBottom: THEME.spacing.md},
-  avatarContainer: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: COLORS.surface,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 3,
-    borderColor: COLORS.primary,
-  },
-  verifiedBadge: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: COLORS.primary,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  name: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: COLORS.textPrimary,
-    marginBottom: THEME.spacing.xs,
-  },
-  designation: {
-    fontSize: 11,
-    fontWeight: '600',
-    color: COLORS.primary,
-    letterSpacing: 1,
-    marginBottom: THEME.spacing.xs,
-  },
-  employeeIdBadge: {
-    backgroundColor: COLORS.primary,
-    paddingHorizontal: THEME.spacing.md,
-    paddingVertical: THEME.spacing.xs,
-    borderRadius: THEME.borderRadius.md,
-  },
-  employeeIdText: {fontSize: 11, fontWeight: '600', color: COLORS.onPrimary},
-  card: {marginHorizontal: SCREEN_PAD, marginBottom: THEME.spacing.md},
-  sectionTitle: {
-    fontSize: 10,
-    fontWeight: '600',
-    color: COLORS.textSecondary,
-    letterSpacing: 1,
-    marginBottom: THEME.spacing.md,
-  },
-  emergencyHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: THEME.spacing.md,
-  },
-  editLink: {fontSize: 12, fontWeight: '600', color: COLORS.primary},
-  modalInput: {marginBottom: THEME.spacing.md},
-  infoRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: THEME.spacing.md,
-  },
-  rowIcon: {marginRight: THEME.spacing.md},
-  infoContent: {flex: 1},
-  infoLabel: {...THEME.typography.caption, color: COLORS.textSecondary},
-  infoValue: {
-    ...THEME.typography.body,
-    color: COLORS.textPrimary,
-    fontWeight: '500',
-  },
-  employmentRow: {marginBottom: THEME.spacing.sm},
-  employmentLabel: {...THEME.typography.caption, color: COLORS.textSecondary},
-  employmentValue: {
-    ...THEME.typography.body,
-    color: COLORS.textPrimary,
-    fontWeight: '600',
-    marginTop: 2,
-  },
-  employmentValueOrange: {
-    ...THEME.typography.body,
-    color: COLORS.primary,
-    fontWeight: '600',
-    marginTop: 2,
-  },
-  emergencyCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: COLORS.surfaceVariant,
-    padding: THEME.spacing.md,
-    borderRadius: THEME.borderRadius.md,
-  },
-  emergencyIcon: {marginRight: THEME.spacing.md},
-  emergencyContent: {flex: 1},
-  emergencyName: {fontSize: 15, color: COLORS.textPrimary, fontWeight: '600'},
-  emergencyMeta: {
-    ...THEME.typography.caption,
-    color: COLORS.textSecondary,
-    marginTop: 2,
-  },
-  emergencyCallBtn: {padding: THEME.spacing.sm},
-  actions: {marginHorizontal: SCREEN_PAD, marginBottom: THEME.spacing.md},
-  actionRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: THEME.spacing.md,
-    gap: THEME.spacing.md,
-  },
-  actionRowBorder: {borderTopWidth: 1, borderTopColor: COLORS.border},
-  actionText: {
-    ...THEME.typography.body,
-    color: COLORS.textPrimary,
-    fontWeight: '500',
-  },
-  logoutButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: THEME.spacing.sm,
-    marginHorizontal: SCREEN_PAD,
-    paddingVertical: THEME.spacing.md,
-    backgroundColor: COLORS.error,
-    borderRadius: THEME.borderRadius.md,
-  },
-  logoutText: {fontSize: 15, color: COLORS.textPrimary, fontWeight: '600'},
-});

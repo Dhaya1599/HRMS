@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Modal } from '../ui/Modal';
-import { COLORS, THEME } from '../../constants/colors';
-import { formatDate, formatTime12h, formatHoursMinutes } from '../../utils/formatters';
+import { View, Text } from 'react-native';
+import { Modal } from '@components/ui/Modal';
+import { COLORS } from '@constants/colors';
+import { styles } from '@styles/components/AttendanceRecordDetailModalStyles';
+import { formatDate, formatHoursMinutes, formatTime12h } from '@utils/formatters';
 import { Calendar, Clock, MapPin, CheckCircle, AlertCircle, XCircle } from 'lucide-react-native';
 import type { AttendanceRecord } from '../../api/attendance';
 
@@ -89,15 +90,3 @@ export const AttendanceRecordDetailModal: React.FC<AttendanceRecordDetailModalPr
     </Modal>
   );
 };
-
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginBottom: THEME.spacing.lg,
-  },
-  labelValue: { flex: 1, marginLeft: THEME.spacing.md },
-  label: { fontSize: 11, fontWeight: '600', color: COLORS.textTertiary, letterSpacing: 0.3, marginBottom: 2 },
-  value: { fontSize: 15, fontWeight: '600', color: COLORS.textPrimary },
-  sub: { fontSize: 12, color: COLORS.textSecondary, marginTop: 2 },
-});

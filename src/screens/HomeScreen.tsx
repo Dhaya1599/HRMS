@@ -2,14 +2,13 @@ import React, { useState, useCallback } from 'react';
 import {
   View,
   ScrollView,
-  StyleSheet,
   SafeAreaView,
   RefreshControl,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useAuth } from '../context/AuthContext';
 import { useAttendance } from '../context/AttendanceContext';
-import { COLORS, THEME } from '../constants/colors';
+import { COLORS } from '../constants/colors';
 import { leaveApi } from '../api/leave';
 import {
   MOCK_PROFILE_EXTENDED,
@@ -20,7 +19,7 @@ import { HomeHeaderGreeting } from '../components/home/HomeHeaderGreeting';
 import { LiveAttendanceCard } from '../components/home/LiveAttendanceCard';
 import { LeaveBalanceCards } from '../components/home/LeaveBalanceCards';
 import { AnnouncementsBlock } from '../components/home/AnnouncementsBlock';
-import { SCREEN_PAD } from '../components/ui/ScreenTitle';
+import { styles } from '../styles/screens/HomeScreenStyles';
 
 export function HomeScreen({
   navigation,
@@ -101,13 +100,3 @@ export function HomeScreen({
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: COLORS.backgroundSecondary },
-  scroll: {flex: 1},
-  scrollContent: { paddingBottom: THEME.spacing.xxl },
-  content: {
-    paddingHorizontal: SCREEN_PAD,
-    paddingTop: THEME.spacing.lg,
-  },
-});

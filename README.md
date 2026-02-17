@@ -58,6 +58,13 @@ npm run ios
 npm start
 ```
 
+**Important:** Start Metro **before** launching the app (or use `npm run ios` / `npm run android`, which can start it for you). If you see **"Connection refused"** or **"nw_socket_handle_socket_event ... SO_ERROR [61]"**, the device/simulator cannot reach the Metro bundler:
+
+- **Simulator:** Run `npm start` in the project root, then run the app. Metro uses port **8081** by default.
+- **Physical device:** Run `npm run start:device` so Metro listens on all interfaces (`--host 0.0.0.0`), and ensure the device and Mac are on the same Wi‑Fi. Shake the device → "Configure Bundler" if you need to set the dev server IP manually.
+
+Do not set `RCT_METRO_PORT` in `ios/.xcode.env.local` unless you run Metro on a different port.
+
 ## Configuration
 
 - **API base URL** – Edit `src/constants/api.ts`: set `API_CONFIG.BASE_URL` or use `REACT_APP_API_URL` if you add a dotenv solution.

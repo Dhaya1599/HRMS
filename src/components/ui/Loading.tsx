@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, ActivityIndicator, Text, StyleSheet } from 'react-native';
-import { COLORS, THEME } from '@constants/colors';
+import { View, ActivityIndicator, Text } from 'react-native';
+import { COLORS } from '@constants/colors';
+import { styles } from '@styles/components/LoadingStyles';
 
 interface LoadingProps {
   size?: 'small' | 'large';
@@ -20,9 +21,3 @@ export const Loading: React.FC<LoadingProps> = ({
     {message && <Text style={styles.message}>{message}</Text>}
   </View>
 );
-
-const styles = StyleSheet.create({
-  container: { justifyContent: 'center', alignItems: 'center', paddingVertical: THEME.spacing.xxl },
-  fullScreen: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: COLORS.background },
-  message: { ...THEME.typography.bodySmall, color: COLORS.textSecondary, marginTop: THEME.spacing.lg },
-});

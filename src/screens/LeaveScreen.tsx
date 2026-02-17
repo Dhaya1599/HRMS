@@ -2,7 +2,6 @@ import React, { useState, useCallback, useMemo } from 'react';
 import {
   View,
   ScrollView,
-  StyleSheet,
   SafeAreaView,
   RefreshControl,
   Alert,
@@ -10,7 +9,7 @@ import {
   Text,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { COLORS, THEME } from '../constants/colors';
+import { COLORS } from '../constants/colors';
 import { LEAVE_TYPE_DISPLAY_NAMES } from '../constants/leave';
 import { leaveApi, LeaveRecord } from '../api/leave';
 import { MOCK_PERMISSIONS, MOCK_LEAVE_RECORDS } from '../data/mockData';
@@ -19,7 +18,8 @@ import { LeaveHistoryItem } from '../components/leave/LeaveHistoryItem';
 import { PermissionItem } from '../components/leave/PermissionItem';
 import { ApplyLeaveModal } from '../components/leave/ApplyLeaveModal';
 import { ApplyPermissionModal, ApplyPermissionPayload } from '../components/leave/ApplyPermissionModal';
-import { ScreenTitle, SCREEN_PAD } from '../components/ui/ScreenTitle';
+import { ScreenTitle } from '../components/ui/ScreenTitle';
+import { styles } from '../styles/screens/LeaveScreenStyles';
 import { Clock, FileText } from 'lucide-react-native';
 
 export function LeaveScreen() {
@@ -196,21 +196,3 @@ export function LeaveScreen() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: COLORS.background },
-  content: { paddingHorizontal: SCREEN_PAD, paddingBottom: THEME.spacing.xxl },
-  section: { marginBottom: THEME.spacing.xl },
-  sectionTitleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: THEME.spacing.md,
-  },
-  sectionIcon: { marginRight: THEME.spacing.sm },
-  sectionTitle: { flex: 1, fontSize: 14, fontWeight: '700', color: COLORS.textPrimary, letterSpacing: 0.3 },
-  sectionAction: { paddingVertical: THEME.spacing.xs, paddingHorizontal: THEME.spacing.sm },
-  sectionActionText: { fontSize: 13, fontWeight: '600', color: COLORS.primary },
-  emptyState: { paddingVertical: THEME.spacing.xxl, alignItems: 'center' },
-  emptyText: { fontSize: 15, color: COLORS.textSecondary, fontWeight: '500' },
-  emptySub: { fontSize: 13, color: COLORS.textTertiary, marginTop: 4 },
-});

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { Modal } from '@components/ui/Modal';
 import { COLORS, THEME } from '@constants/colors';
+import { styles } from '@styles/components/ApplyLeaveModalStyles';
 import { ChevronDown, Calendar } from 'lucide-react-native';
 
 const LEAVE_TYPES = ['Casual Leave', 'Sick Leave', 'Earned Leave'];
@@ -119,27 +120,3 @@ export const ApplyLeaveModal: React.FC<ApplyLeaveModalProps> = ({
     </Modal>
   );
 };
-
-const styles = StyleSheet.create({
-  field: { marginBottom: THEME.spacing.md },
-  half: { flex: 1 },
-  row: { flexDirection: 'row', gap: THEME.spacing.sm },
-  fieldLabel: { fontSize: 13, color: COLORS.textPrimary, marginBottom: THEME.spacing.xs },
-  inputRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: COLORS.surface,
-    borderRadius: THEME.borderRadius.md,
-    paddingHorizontal: THEME.spacing.md,
-    borderWidth: 1,
-    borderColor: COLORS.border,
-  },
-  input: {
-    flex: 1,
-    fontSize: 15,
-    color: COLORS.textPrimary,
-    paddingVertical: THEME.spacing.sm,
-  },
-  inputText: { flex: 1, fontSize: 15, color: COLORS.textPrimary, paddingVertical: THEME.spacing.sm },
-  textArea: { minHeight: 64, textAlignVertical: 'top', paddingTop: THEME.spacing.sm },
-});

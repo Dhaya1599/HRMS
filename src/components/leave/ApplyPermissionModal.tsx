@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import { Modal } from '@components/ui/Modal';
 import { Input } from '@components/ui/Input';
+import { styles } from '@styles/components/ApplyPermissionModalStyles';
 
 export interface ApplyPermissionPayload {
   date: string;
@@ -55,7 +56,3 @@ export const ApplyPermissionModal: React.FC<ApplyPermissionModalProps> = ({
     </Modal>
   );
 };
-
-const styles = StyleSheet.create({
-  input: { marginBottom: 12 },
-});

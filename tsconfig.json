@@ -8,16 +8,43 @@
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "paths": {
-      "@/*": ["src/*"],
-      "@components/*": ["src/components/*"],
-      "@hooks/*": ["src/hooks/*"],
-      "@utils/*": ["src/utils/*"],
-      "@constants/*": ["src/constants/*"],
-      "@types/*": ["src/types/*"],
-      "@context/*": ["src/context/*"],
-      "@api/*": ["src/api/*"],
-      "@screens/*": ["src/screens/*"]
+      "@/*": [
+        "src/*"
+      ],
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@hooks/*": [
+        "src/hooks/*"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ],
+      "@constants/*": [
+        "src/constants/*"
+      ],
+      "@types/*": [
+        "src/types/*"
+      ],
+      "@context/*": [
+        "src/context/*"
+      ],
+      "@api/*": [
+        "src/api/*"
+      ],
+      "@screens/*": [
+        "src/screens/*"
+      ],
+      "@styles/*": [
+        "src/styles/*"
+      ]
     }
   },
-  "include": ["src", "App.tsx", "index.js", "*.ts", "*.tsx"]
+  "include": [
+    "src",
+    "App.tsx",
+    "index.js",
+    "*.ts",
+    "*.tsx"
+  ]
 }

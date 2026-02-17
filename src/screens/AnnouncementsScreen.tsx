@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ArrowLeft } from 'lucide-react-native';
 import { Card } from '@components/ui/Card';
-import { COLORS, THEME } from '@constants/colors';
+import { COLORS } from '@constants/colors';
+import { styles } from '@styles/screens/AnnouncementsScreenStyles';
 import { MOCK_ANNOUNCEMENTS } from '../data/mockData';
 import { formatDate } from '@utils/formatters';
 
@@ -33,15 +34,3 @@ export function AnnouncementsScreen() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: COLORS.background },
-  header: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: THEME.spacing.lg, paddingVertical: THEME.spacing.md, borderBottomWidth: 1, borderBottomColor: COLORS.border },
-  backBtn: { marginRight: THEME.spacing.md },
-  title: { fontSize: 18, fontWeight: '600', color: COLORS.textPrimary },
-  content: { padding: THEME.spacing.lg, paddingBottom: THEME.spacing.xl },
-  card: { marginBottom: THEME.spacing.md },
-  cardTitle: { fontSize: 16, fontWeight: '600', color: COLORS.textPrimary, marginBottom: THEME.spacing.sm },
-  cardBody: { fontSize: 14, color: COLORS.textSecondary, lineHeight: 20, marginBottom: THEME.spacing.sm },
-  cardMeta: { fontSize: 12, color: COLORS.textTertiary },
-});

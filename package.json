@@ -8,11 +8,18 @@
     "android:one": "concurrently -k -n metro,android \"react-native start\" \"wait-on http://localhost:8081/status && react-native run-android\"",
     "android:win": "cmd /c \"if not exist C:\\Temp mkdir C:\\Temp && set TMP=C:\\Temp && set TEMP=C:\\Temp && npx react-native run-android\"",
     "ios": "react-native run-ios",
+    "ios:clean": "cd ios && rm -rf Pods build && rm -f Podfile.lock && cd .. && (rm -rf ~/Library/Developer/Xcode/DerivedData/* ~/Library/Caches/com.apple.dt.Xcode/* 2>/dev/null || true) && cd ios && pod install && cd ..",
+    "ios:xcode": "open ios/HRMSMobile.xcworkspace",
     "lint": "eslint .",
     "start": "react-native start",
     "start:device": "react-native start --host 0.0.0.0",
     "test": "jest",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "start:clear": "react-native start --reset-cache",
+    "kill-port": "lsof -ti:8081 | xargs kill -9 2>/dev/null || true",
+    "start:clear:force": "lsof -ti:8081 | xargs kill -9 2>/dev/null || true; react-native start --reset-cache",
+    "clear-cache": "rm -rf node_modules/.cache /tmp/metro-* /tmp/haste-* 2>/dev/null; echo 'Cache cleared. Use npm run start:clear to start Metro with a fresh cache.'",
+    "clean:all": "rm -rf node_modules/.cache /tmp/metro-* /tmp/haste-* 2>/dev/null; watchman watch-del-all 2>/dev/null; echo 'Caches cleared. For Xcode: cd ios && xcodebuild clean'"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.0.1",

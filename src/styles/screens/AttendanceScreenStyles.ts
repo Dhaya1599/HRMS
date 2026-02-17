@@ -1,0 +1,97 @@
+import { StyleSheet } from 'react-native';
+import { COLORS, THEME } from '../../constants/colors';
+import { SCREEN_PAD } from '../global';
+
+export const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: COLORS.backgroundSecondary },
+  content: { paddingHorizontal: SCREEN_PAD, paddingBottom: THEME.spacing.xxl },
+  summaryGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: THEME.spacing.sm,
+    marginBottom: THEME.spacing.lg,
+  },
+  summaryCard: {
+    width: '31%',
+    minWidth: '31%',
+    backgroundColor: COLORS.surface,
+    borderRadius: THEME.borderRadius.md,
+    padding: THEME.spacing.md,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+  },
+  summaryCardPrimary: {
+    backgroundColor: COLORS.primary,
+    borderColor: COLORS.primary,
+  },
+  summaryLabelOnPrimary: { color: 'rgba(255,255,255,0.9)' },
+  summaryValueOnPrimary: { color: COLORS.onPrimary },
+  summaryIcon: { marginBottom: THEME.spacing.xs },
+  summaryLabel: {
+    fontSize: 10,
+    fontWeight: '600',
+    color: COLORS.textTertiary,
+    letterSpacing: 0.3,
+    marginTop: 2,
+  },
+  summaryValue: { fontSize: 18, fontWeight: '700', color: COLORS.textPrimary },
+  summaryValueSmall: { fontSize: 16 },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: THEME.spacing.sm,
+    flexWrap: 'wrap',
+  },
+  sectionTitle: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: COLORS.textPrimary,
+    letterSpacing: 0.3,
+  },
+  sectionSub: { fontSize: 12, color: COLORS.textSecondary, marginTop: 2 },
+  logHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: THEME.spacing.sm,
+    paddingHorizontal: THEME.spacing.xs,
+    marginBottom: THEME.spacing.xs,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.border,
+  },
+  logHeaderDate: {
+    width: 52,
+    marginRight: THEME.spacing.md,
+    fontSize: 10,
+    fontWeight: '700',
+    color: COLORS.textTertiary,
+    letterSpacing: 0.5,
+  },
+  logHeaderWorked: {
+    flex: 1,
+    fontSize: 10,
+    fontWeight: '700',
+    color: COLORS.textTertiary,
+    letterSpacing: 0.5,
+  },
+  logHeaderStatus: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: COLORS.textTertiary,
+    letterSpacing: 0.5,
+  },
+  emptyLogs: { paddingVertical: THEME.spacing.xxl, alignItems: 'center' },
+  emptyIcon: { marginBottom: THEME.spacing.md, opacity: 0.6 },
+  emptyTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: COLORS.textPrimary,
+    marginBottom: THEME.spacing.sm,
+  },
+  emptyText: {
+    fontSize: 13,
+    color: COLORS.textSecondary,
+    textAlign: 'center',
+    paddingHorizontal: THEME.spacing.lg,
+  },
+});

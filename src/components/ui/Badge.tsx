@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, ViewStyle } from 'react-native';
+import { View, Text, ViewStyle } from 'react-native';
 import { COLORS, THEME } from '@constants/colors';
+import { styles } from '@styles/components/BadgeStyles';
 
 interface BadgeProps {
   label: string;
@@ -28,7 +29,3 @@ export const Badge: React.FC<BadgeProps> = ({ label, variant = 'default', size =
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  badge: { borderRadius: THEME.borderRadius.md, justifyContent: 'center', alignItems: 'center', alignSelf: 'flex-start' },
-});

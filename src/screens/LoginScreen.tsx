@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   SafeAreaView,
   ScrollView,
   Alert,
@@ -15,7 +14,8 @@ import {useAuth} from '@context/AuthContext';
 import {Input} from '@components/ui/Input';
 import {Button} from '@components/ui/Button';
 import {Loading} from '@components/ui/Loading';
-import {COLORS, THEME} from '@constants/colors';
+import {COLORS} from '@constants/colors';
+import { styles } from '@styles/screens/LoginScreenStyles';
 import {Lock, Mail, Shield, Eye, EyeOff} from 'lucide-react-native';
 
 export function LoginScreen() {
@@ -175,102 +175,3 @@ export function LoginScreen() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: COLORS.background},
-  keyboardView: {flex: 1},
-  scrollContent: {
-    flexGrow: 1,
-    paddingHorizontal: THEME.spacing.xl,
-    paddingTop: THEME.spacing.xxl,
-    paddingBottom: THEME.spacing.xxxl,
-  },
-  brandSection: {alignItems: 'center', marginBottom: THEME.spacing.xl},
-  logoCircle: {
-    width: 72,
-    height: 72,
-    borderRadius: 36,
-    backgroundColor: '#FEE7D6',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: THEME.spacing.md,
-    ...THEME.shadows.sm,
-  },
-  portalTitle: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: COLORS.textPrimary,
-    letterSpacing: 1.5,
-  },
-  welcomeSection: {marginBottom: THEME.spacing.xl},
-  welcomeImagePlaceholder: {
-    backgroundColor: '#FEE7D6',
-    borderRadius: THEME.borderRadius.lg,
-    paddingVertical: THEME.spacing.xxl,
-    paddingHorizontal: THEME.spacing.lg,
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: 140,
-  },
-  welcomeTitle: {
-    fontSize: 28,
-    fontWeight: '700',
-    color: COLORS.textPrimary,
-    marginBottom: THEME.spacing.xs,
-  },
-  welcomeSubtitle: {
-    fontSize: 14,
-    color: COLORS.textSecondary,
-    fontWeight: '500',
-  },
-  formSection: {marginBottom: THEME.spacing.xxl},
-  inputLabel: {
-    fontSize: 11,
-    fontWeight: '600',
-    color: COLORS.textPrimary,
-    letterSpacing: 0.5,
-    marginBottom: THEME.spacing.sm,
-  },
-  inputContainer: {marginBottom: THEME.spacing.lg},
-  inputIcon: {fontSize: 18, color: COLORS.primary, fontWeight: '600'},
-  passwordRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: THEME.spacing.sm,
-  },
-  forgotLink: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: COLORS.primary,
-  },
-  errorContainer: {
-    backgroundColor: COLORS.error,
-    padding: THEME.spacing.md,
-    borderRadius: THEME.borderRadius.md,
-    marginBottom: THEME.spacing.lg,
-  },
-  errorText: {fontSize: 14, color: COLORS.onPrimary},
-  secureButton: {marginTop: THEME.spacing.sm, marginBottom: THEME.spacing.md},
-  shieldCheck: {marginRight: THEME.spacing.sm},
-  demoButton: {},
-  footerSection: {
-    alignItems: 'center',
-    paddingTop: THEME.spacing.xl,
-    borderTopWidth: 1,
-    borderTopColor: COLORS.border,
-  },
-  footerText: {
-    fontSize: 13,
-    color: COLORS.textSecondary,
-    marginBottom: THEME.spacing.md,
-  },
-  footerLink: {
-    color: COLORS.primary,
-    fontWeight: '600',
-    textDecorationLine: 'underline',
-  },
-  legalRow: {flexDirection: 'row', alignItems: 'center'},
-  legalLink: {fontSize: 11, color: COLORS.textTertiary, letterSpacing: 0.5},
-  legalSpacer: {color: COLORS.textTertiary},
-});

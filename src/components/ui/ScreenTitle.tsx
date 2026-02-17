@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, ViewStyle } from 'react-native';
-import { COLORS, THEME } from '../../constants/colors';
+import { View, Text, ViewStyle } from 'react-native';
+import { styles, SCREEN_PAD } from '../../styles/components/ScreenTitleStyles';
 
-const PAD = THEME.spacing.lg;
+export { SCREEN_PAD };
 
 interface ScreenTitleProps {
   title: string;
@@ -16,21 +16,3 @@ export const ScreenTitle: React.FC<ScreenTitleProps> = ({ title, right, style })
     {right != null && <View style={styles.right}>{right}</View>}
   </View>
 );
-
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: PAD,
-    paddingVertical: THEME.spacing.md,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: COLORS.textPrimary,
-  },
-  right: {},
-});
-
-export const SCREEN_PAD = PAD;

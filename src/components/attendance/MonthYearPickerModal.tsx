@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { Modal } from '@components/ui/Modal';
-import { COLORS, THEME } from '@constants/colors';
+import { COLORS } from '@constants/colors';
+import { styles } from '@styles/components/MonthYearPickerModalStyles';
 
 const MONTHS = [
   'January', 'February', 'March', 'April', 'May', 'June',
@@ -68,17 +69,3 @@ export const MonthYearPickerModal: React.FC<MonthYearPickerModalProps> = ({
     </Modal>
   );
 };
-
-const styles = StyleSheet.create({
-  list: { maxHeight: 280 },
-  listContent: { paddingBottom: THEME.spacing.md },
-  option: {
-    paddingVertical: THEME.spacing.md,
-    paddingHorizontal: THEME.spacing.lg,
-    borderRadius: THEME.borderRadius.sm,
-    marginBottom: THEME.spacing.xs,
-  },
-  optionSelected: { backgroundColor: COLORS.surfaceVariant, borderLeftWidth: 3, borderLeftColor: COLORS.primary },
-  optionText: { fontSize: 15, color: COLORS.textPrimary, fontWeight: '500' },
-  optionTextSelected: { fontWeight: '600', color: COLORS.primary },
-});
