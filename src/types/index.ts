@@ -4,7 +4,7 @@ export interface User {
   email: string;
   employeeId: string;
   department: string;
-  role: 'employee' | 'manager' | 'admin';
+  role: 'employee';
   phone?: string;
   profileImage?: string;
   joinDate: string;

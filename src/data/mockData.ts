@@ -10,7 +10,7 @@ export const MOCK_USER: User = {
   email: 'alex.sterling@company.com',
   employeeId: 'EMP-2024-089',
   department: 'Design & Creative',
-  role: 'manager',
+  role: 'employee',
   phone: '+1 (555) 012-3456',
   joinDate: '2021-10-12',
 };
@@ -26,7 +26,6 @@ export const MOCK_PROFILE_EXTENDED = {
     relationship: 'Spouse',
     phone: '+1 (555) 987-6543',
   },
-  reportingHierarchy: ['Jordan Vane (Manager)', 'Design & Creative'],
 };
 
 /** Leave type display labels (CL = Casual, SL = Sick, EL = Earned) */
@@ -182,7 +181,7 @@ export const MOCK_TEAM_MEMBERS = [
     email: 'jordan.v@company.com',
     employeeId: 'EMP-2022-012',
     department: 'Design & Creative',
-    role: 'manager' as const,
+    role: 'employee' as const,
     joinDate: '2020-03-01',
     currentStatus: 'in' as const,
     lastCheckIn: '08:55',
@@ -228,17 +227,6 @@ export const MOCK_PERMISSIONS = [
   { id: 'perm-1', employeeId: 'demo-1', date: '2025-02-14', fromTime: '10:00', toTime: '11:00', reason: 'Doctor visit', status: 'approved' as const, approvedBy: 'Jordan Vane', createdAt: '2025-02-13T09:00:00Z' },
   { id: 'perm-2', employeeId: 'demo-1', date: '2025-02-18', fromTime: '14:00', toTime: '15:00', reason: 'Personal', status: 'pending' as const, createdAt: '2025-02-16T10:00:00Z' },
 ];
-
-/** Manager dashboard (mock) — GET /api/v1/dashboard/manager */
-export const MOCK_MANAGER_DASHBOARD = {
-  teamAttendanceSummary: { present: 8, absent: 1, onLeave: 1, late: 1 },
-  pendingLeaveApprovals: 3,
-  pendingPermissionApprovals: 1,
-  exceptions: [
-    { id: 'ex1', employeeId: 'mem-3', employeeName: 'Sam Williams', type: 'late_login', date: '2025-02-14', checkInTime: '09:45' },
-    { id: 'ex2', employeeId: 'mem-2', employeeName: 'Jordan Vane', type: 'no_punch_out', date: '2025-02-13' },
-  ] as const,
-};
 
 let mockTodayAttendance = {
   hasCheckedIn: false,

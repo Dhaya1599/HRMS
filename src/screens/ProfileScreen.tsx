@@ -216,14 +216,6 @@ export function ProfileScreen({ navigation }: { navigation?: { goBack?: () => vo
               <Text style={styles.employmentValue}>{(profile as { approvedWorkLocation?: string }).approvedWorkLocation}</Text>
             </View>
           )}
-          {'reportingHierarchy' in profile && Array.isArray((profile as { reportingHierarchy?: string[] }).reportingHierarchy) && (
-            <View style={styles.employmentRow}>
-              <Text style={styles.employmentLabel}>Reporting Hierarchy</Text>
-              <Text style={styles.employmentValue}>
-                {(profile as { reportingHierarchy: string[] }).reportingHierarchy.join(' → ')}
-              </Text>
-            </View>
-          )}
         </Card>
 
         {/* Emergency Contact */}
@@ -259,18 +251,6 @@ export function ProfileScreen({ navigation }: { navigation?: { goBack?: () => vo
             <Bell size={20} color={COLORS.primary} />
             <Text style={styles.actionText}>Notifications</Text>
           </TouchableOpacity>
-          {authState.user?.role === 'manager' && (
-            <TouchableOpacity style={[styles.actionRow, styles.actionRowBorder]} onPress={() => nav?.navigate?.('Team')}>
-              <UserIcon size={20} color={COLORS.primary} />
-              <Text style={styles.actionText}>Team</Text>
-            </TouchableOpacity>
-          )}
-          {authState.user?.role === 'manager' && (
-            <TouchableOpacity style={[styles.actionRow, styles.actionRowBorder]} onPress={() => nav?.navigate?.('ManagerDashboard')}>
-              <UserIcon size={20} color={COLORS.primary} />
-              <Text style={styles.actionText}>Manager Dashboard</Text>
-            </TouchableOpacity>
-          )}
           <TouchableOpacity style={[styles.actionRow, styles.actionRowBorder]} onPress={() => nav?.navigate?.('Geofencing')}>
             <Map size={20} color={COLORS.primary} />
             <Text style={styles.actionText}>Work locations</Text>
