@@ -16,6 +16,5 @@ export const MainStack = () => (
   <Stack.Navigator screenOptions={{headerShown: false}}>
     <Stack.Screen name="MainTabs" component={MainTabs} />
     <Stack.Screen name="Announcements" component={AnnouncementsScreen} />
-    <Stack.Screen name="Notifications" component={NotificationsScreen} />
   </Stack.Navigator>
 );
