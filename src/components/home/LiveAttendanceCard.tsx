@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { COLORS, THEME } from '../../constants/colors';
+import { formatTime12h, formatHoursMinutes } from '../../utils/formatters';
 import { useLiveElapsed } from '../../hooks/useLiveElapsed';
 import { LogOut } from 'lucide-react-native';
 
@@ -14,19 +15,6 @@ interface LiveAttendanceCardProps {
 
 const TARGET_HOURS = 9;
 const TARGET_MINUTES = 0;
-
-function formatTimeForDisplay(t: string): string {
-  const [h, m] = t.split(':').map(Number);
-  const hour12 = (h ?? 0) % 12 || 12;
-  const ampm = (h ?? 0) >= 12 ? 'PM' : 'AM';
-  return `${hour12}:${String(m ?? 0).padStart(2, '0')} ${ampm}`;
-}
-
-function formatHoursMinutes(hours: number): string {
-  const h = Math.floor(hours);
-  const m = Math.round((hours - h) * 60);
-  return `${h}h ${m}m`;
-}
 
 export const LiveAttendanceCard: React.FC<LiveAttendanceCardProps> = ({
   checkInTime,
@@ -89,7 +77,7 @@ export const LiveAttendanceCard: React.FC<LiveAttendanceCardProps> = ({
               <Text style={styles.clockedInText}>Clocked In</Text>
             </View>
             <View style={styles.entryTimeBlock}>
-              <Text style={styles.entryTime}>{formatTimeForDisplay(checkInTime)}</Text>
+              <Text style={styles.entryTime}>{formatTime12h(checkInTime)}</Text>
               <Text style={styles.entryLabel}>Entry Time</Text>
             </View>
           </View>
@@ -124,7 +112,7 @@ export const LiveAttendanceCard: React.FC<LiveAttendanceCardProps> = ({
           <View style={styles.statusRow}>
             <Text style={styles.shiftText}>Shift ended</Text>
             <View style={styles.entryTimeBlock}>
-              <Text style={styles.entryTime}>{checkOutTime ? formatTimeForDisplay(checkOutTime) : '—'}</Text>
+              <Text style={styles.entryTime}>{checkOutTime ? formatTime12h(checkOutTime) : '—'}</Text>
               <Text style={styles.entryLabel}>Exit Time</Text>
             </View>
           </View>

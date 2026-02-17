@@ -1,18 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Modal } from '@components/ui/Modal';
-import { COLORS, THEME } from '@constants/colors';
+import { Modal } from '../ui/Modal';
+import { COLORS, THEME } from '../../constants/colors';
+import { formatDate, formatTime12h, formatHoursMinutes } from '../../utils/formatters';
 import { Calendar, Clock, MapPin, CheckCircle, AlertCircle, XCircle } from 'lucide-react-native';
-import type { AttendanceRecord } from '@api/attendance';
-import { formatDate } from '@utils/formatters';
-
-function formatTime(t: string): string {
-  if (!t || t === '—') return '—';
-  const [h, m] = t.split(':').map(Number);
-  const hour12 = (h ?? 0) % 12 || 12;
-  const ampm = (h ?? 0) >= 12 ? 'PM' : 'AM';
-  return `${hour12}:${String(m ?? 0).padStart(2, '0')} ${ampm}`;
-}
+import type { AttendanceRecord } from '../../api/attendance';
 
 function getStatusInfo(status: string) {
   if (status === 'present') return { label: 'On time', icon: CheckCircle, color: COLORS.approved };
@@ -38,7 +30,7 @@ export const AttendanceRecordDetailModal: React.FC<AttendanceRecordDetailModalPr
   const dayLabel = d.toLocaleDateString('en-US', { weekday: 'long' });
   const dateFormatted = formatDate(record.date, 'MMMM dd, yyyy');
   const workedHours = record.workingHours != null && record.workingHours > 0
-    ? `${Math.floor(record.workingHours)}h ${Math.round((record.workingHours % 1) * 60)}m`
+    ? formatHoursMinutes(record.workingHours)
     : '—';
   const statusInfo = getStatusInfo(record.status);
   const StatusIcon = statusInfo.icon;
@@ -66,14 +58,14 @@ export const AttendanceRecordDetailModal: React.FC<AttendanceRecordDetailModalPr
             <Clock size={18} color={COLORS.textSecondary} />
             <View style={styles.labelValue}>
               <Text style={styles.label}>Punch in</Text>
-              <Text style={styles.value}>{formatTime(record.checkInTime ?? '—')}</Text>
+              <Text style={styles.value}>{formatTime12h(record.checkInTime ?? '—')}</Text>
             </View>
           </View>
           <View style={styles.row}>
             <Clock size={18} color={COLORS.textSecondary} />
             <View style={styles.labelValue}>
               <Text style={styles.label}>Punch out</Text>
-              <Text style={styles.value}>{formatTime(record.checkOutTime ?? '—')}</Text>
+              <Text style={styles.value}>{formatTime12h(record.checkOutTime ?? '—')}</Text>
             </View>
           </View>
           <View style={styles.row}>

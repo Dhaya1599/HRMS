@@ -76,3 +76,21 @@ export const parseTimeString = (timeStr: string): Date => {
     return new Date();
   }
 };
+
+export const formatTime12h = (time: string): string => {
+  if (!time || time.trim() === '' || time === '—') return '—';
+  const parts = time.split(':').map(Number);
+  const h = parts[0] ?? 0;
+  const m = parts[1] ?? 0;
+  const hour12 = h % 12 || 12;
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  return `${hour12}:${String(m).padStart(2, '0')} ${ampm}`;
+};
+
+export const formatHoursMinutes = (hours: number): string => {
+  const h = Math.floor(hours);
+  const m = Math.round((hours - h) * 60);
+  if (h === 0) return `${m}m`;
+  if (m === 0) return `${h}h`;
+  return `${h}h ${m}m`;
+};

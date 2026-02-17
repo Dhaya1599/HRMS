@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { COLORS, THEME } from '@constants/colors';
-import { StatusPill } from '@components/ui/StatusPill';
+import { COLORS, THEME } from '../../constants/colors';
+import { StatusPill } from '../ui/StatusPill';
+import { formatDate } from '../../utils/formatters';
 import { Check, Clock, X, Calendar } from 'lucide-react-native';
 
 export interface LeaveHistoryRecord {
@@ -14,7 +15,6 @@ export interface LeaveHistoryRecord {
 
 interface LeaveHistoryItemProps {
   item: LeaveHistoryRecord;
-  formatDate: (d: string, f: string) => string;
 }
 
 function statusVariant(s: string): 'approved' | 'pending' | 'rejected' {
@@ -35,7 +35,7 @@ function getBorderColor(status: string) {
   return COLORS.primary;
 }
 
-export const LeaveHistoryItem: React.FC<LeaveHistoryItemProps> = ({ item, formatDate }) => (
+export const LeaveHistoryItem: React.FC<LeaveHistoryItemProps> = ({ item }) => (
   <View style={[styles.row, { borderLeftColor: getBorderColor(item.status) }]}>
     <StatusIcon status={item.status} />
     <View style={styles.content}>

@@ -2,7 +2,6 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {MainTabs} from './MainTabs';
 import {AnnouncementsScreen} from '@screens/AnnouncementsScreen';
-import {NotificationsScreen} from '@screens/NotificationsScreen';
 
 export type MainStackParamList = {
   MainTabs: undefined;

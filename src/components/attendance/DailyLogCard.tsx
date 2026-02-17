@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { COLORS, THEME } from '@constants/colors';
-import { StatusPill } from '@components/ui/StatusPill';
+import { COLORS, THEME } from '../../constants/colors';
+import { StatusPill } from '../ui/StatusPill';
+import { formatTime12h } from '../../utils/formatters';
 import { ArrowRight, ArrowLeft, ChevronRight } from 'lucide-react-native';
 
 type StatusVariant = 'onTime' | 'late' | 'absent';
@@ -17,14 +18,6 @@ function getStatusLabel(s: string): string {
   if (s === 'absent') return 'ABSENT';
   if (s === 'half_day') return 'HALF DAY';
   return 'ON TIME';
-}
-
-function formatTime(t: string): string {
-  if (!t || t === '—') return '—';
-  const [h, m] = t.split(':').map(Number);
-  const hour12 = (h ?? 0) % 12 || 12;
-  const ampm = (h ?? 0) >= 12 ? 'PM' : 'AM';
-  return `${hour12}:${String(m ?? 0).padStart(2, '0')} ${ampm}`;
 }
 
 export interface DailyLogRecord {
@@ -70,13 +63,13 @@ export const DailyLogCard: React.FC<DailyLogCardProps> = ({ item, onPress }) => 
             <Text style={styles.punchLabel}>PUNCH IN</Text>
             <View style={styles.punchTimeRow}>
               <ArrowRight size={14} color={COLORS.textSecondary} />
-              <Text style={styles.punchTime}>{formatTime(item.checkInTime)}</Text>
+              <Text style={styles.punchTime}>{formatTime12h(item.checkInTime)}</Text>
             </View>
           </View>
           <View style={styles.punchCol}>
             <Text style={styles.punchLabel}>PUNCH OUT</Text>
             <View style={[styles.punchTimeRow, styles.punchTimeRowEnd]}>
-              <Text style={styles.punchTime}>{formatTime(item.checkOutTime)}</Text>
+              <Text style={styles.punchTime}>{formatTime12h(item.checkOutTime)}</Text>
               <ArrowLeft size={14} color={COLORS.textSecondary} />
             </View>
           </View>

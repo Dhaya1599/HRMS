@@ -11,8 +11,8 @@ import {
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { COLORS, THEME } from '../constants/colors';
+import { LEAVE_TYPE_DISPLAY_NAMES } from '../constants/leave';
 import { leaveApi, LeaveRecord } from '../api/leave';
-import { formatDate } from '../utils/formatters';
 import { MOCK_PERMISSIONS, MOCK_LEAVE_RECORDS } from '../data/mockData';
 import { LeaveBalanceSection } from '../components/leave/LeaveBalanceSection';
 import { LeaveHistoryItem } from '../components/leave/LeaveHistoryItem';
@@ -21,12 +21,6 @@ import { ApplyLeaveModal } from '../components/leave/ApplyLeaveModal';
 import { ApplyPermissionModal, ApplyPermissionPayload } from '../components/leave/ApplyPermissionModal';
 import { ScreenTitle, SCREEN_PAD } from '../components/ui/ScreenTitle';
 import { Clock, FileText } from 'lucide-react-native';
-
-const LEAVE_TYPE_LABELS: Record<string, string> = {
-  sick: 'Sick Leave',
-  casual: 'Casual Leave',
-  earned: 'Earned Leave',
-};
 
 export function LeaveScreen() {
   const [leaveRecords, setLeaveRecords] = useState<LeaveRecord[]>([]);
@@ -189,12 +183,11 @@ export function LeaveScreen() {
                 key={item.id}
                 item={{
                   id: item.id,
-                  type: LEAVE_TYPE_LABELS[item.type] ?? item.type,
+                  type: LEAVE_TYPE_DISPLAY_NAMES[item.type] ?? item.type,
                   startDate: item.startDate,
                   endDate: item.endDate,
                   status: item.status,
                 }}
-                formatDate={formatDate}
               />
             ))
           )}
