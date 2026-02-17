@@ -1,13 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Keychain from 'react-native-keychain';
 
-const KEYCHAIN_SERVICE = 'com.hrms.mobile';
+const SECURE_PREFIX = 'hrms_secure_';
 
-// Secure storage for tokens (uses native Keychain/Keystore)
+// Token storage using AsyncStorage (Keychain removed to avoid native crashes)
 export const secureStorage = {
   async set(key: string, value: string): Promise<void> {
     try {
-      await Keychain.setGenericPassword(key, value, { service: KEYCHAIN_SERVICE + '.' + key });
+      await AsyncStorage.setItem(SECURE_PREFIX + key, value);
     } catch (error) {
       console.error(`Error saving secure value for key ${key}:`, error);
     }
@@ -15,8 +14,7 @@ export const secureStorage = {
 
   async get(key: string): Promise<string | null> {
     try {
-      const creds = await Keychain.getGenericPassword({ service: KEYCHAIN_SERVICE + '.' + key });
-      return creds ? creds.password : null;
+      return await AsyncStorage.getItem(SECURE_PREFIX + key);
     } catch (error) {
       console.error(`Error retrieving secure value for key ${key}:`, error);
       return null;
@@ -25,7 +23,7 @@ export const secureStorage = {
 
   async remove(key: string): Promise<void> {
     try {
-      await Keychain.resetGenericPassword({ service: KEYCHAIN_SERVICE + '.' + key });
+      await AsyncStorage.removeItem(SECURE_PREFIX + key);
     } catch (error) {
       console.error(`Error removing secure value for key ${key}:`, error);
     }
@@ -33,8 +31,8 @@ export const secureStorage = {
 
   async clear(): Promise<void> {
     try {
-      await Keychain.resetGenericPassword({ service: KEYCHAIN_SERVICE + '.accessToken' });
-      await Keychain.resetGenericPassword({ service: KEYCHAIN_SERVICE + '.refreshToken' });
+      await AsyncStorage.removeItem(SECURE_PREFIX + 'accessToken');
+      await AsyncStorage.removeItem(SECURE_PREFIX + 'refreshToken');
     } catch (error) {
       console.error('Error clearing secure storage:', error);
     }

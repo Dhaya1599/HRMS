@@ -4,6 +4,10 @@ const defaultConfig = getDefaultConfig(__dirname);
 
 const config = {
   resolver: {
+    blockList: [
+      // Gradle plugin build output; Metro ENOENT when reading these
+      /node_modules[\\/]@react-native[\\/]gradle-plugin[\\/]bin[\\/].*/,
+    ],
     unstable_enablePackageExports: true,
     unstable_conditionNames: ['react-native', 'browser', 'require', 'import'],
     unstable_conditionsByPlatform: {
