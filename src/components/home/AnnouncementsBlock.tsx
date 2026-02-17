@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {COLORS, THEME} from '@constants/colors';
-import {formatDate} from '@utils/formatters';
+import { COLORS, THEME } from '../../constants/colors';
+import { formatDate } from '../../utils/formatters';
 import {Megaphone} from 'lucide-react-native';
 import {SectionHeader} from './SectionHeader';
 

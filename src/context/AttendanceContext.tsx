@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 import { Alert } from 'react-native';
-import { useLocation } from '@hooks/useLocation';
-import { attendanceApi } from '@api/attendance';
+import { useLocation } from '../hooks/useLocation';
+import { attendanceApi } from '../api/attendance';
 
 export interface TodayAttendanceState {
   hasCheckedIn?: boolean;
@@ -39,7 +39,7 @@ export const AttendanceProvider: React.FC<{ children: ReactNode }> = ({ children
   const punchIn = useCallback(async () => {
     setPunchLoading(true);
     try {
-      const loc = location ?? { latitude: 0, longitude: 0 };
+      const loc = location ?? { latitude: 0, longitude: 0, timestamp: Date.now() };
       const response = await attendanceApi.checkIn(loc);
       if (response.success) {
         await refreshAttendance();
@@ -54,7 +54,7 @@ export const AttendanceProvider: React.FC<{ children: ReactNode }> = ({ children
   const punchOut = useCallback(async () => {
     setPunchLoading(true);
     try {
-      const loc = location ?? { latitude: 0, longitude: 0 };
+      const loc = location ?? { latitude: 0, longitude: 0, timestamp: Date.now() };
       const response = await attendanceApi.checkOut(loc);
       if (response.success) {
         await refreshAttendance();

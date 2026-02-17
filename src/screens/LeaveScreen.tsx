@@ -10,16 +10,16 @@ import {
   Text,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { COLORS, THEME } from '@constants/colors';
-import { leaveApi, LeaveRecord } from '@api/leave';
-import { formatDate } from '@utils/formatters';
+import { COLORS, THEME } from '../constants/colors';
+import { leaveApi, LeaveRecord } from '../api/leave';
+import { formatDate } from '../utils/formatters';
 import { MOCK_PERMISSIONS, MOCK_LEAVE_RECORDS } from '../data/mockData';
-import { LeaveBalanceSection } from '@components/leave/LeaveBalanceSection';
-import { LeaveHistoryItem } from '@components/leave/LeaveHistoryItem';
-import { PermissionItem } from '@components/leave/PermissionItem';
-import { ApplyLeaveModal } from '@components/leave/ApplyLeaveModal';
-import { ApplyPermissionModal, ApplyPermissionPayload } from '@components/leave/ApplyPermissionModal';
-import { ScreenTitle, SCREEN_PAD } from '@components/ui/ScreenTitle';
+import { LeaveBalanceSection } from '../components/leave/LeaveBalanceSection';
+import { LeaveHistoryItem } from '../components/leave/LeaveHistoryItem';
+import { PermissionItem } from '../components/leave/PermissionItem';
+import { ApplyLeaveModal } from '../components/leave/ApplyLeaveModal';
+import { ApplyPermissionModal, ApplyPermissionPayload } from '../components/leave/ApplyPermissionModal';
+import { ScreenTitle, SCREEN_PAD } from '../components/ui/ScreenTitle';
 import { Clock, FileText } from 'lucide-react-native';
 
 const LEAVE_TYPE_LABELS: Record<string, string> = {
@@ -44,7 +44,7 @@ export function LeaveScreen() {
         leaveApi.getLeaveRequests(),
         leaveApi.getLeaveBalance(),
       ]);
-      if (resRecords.success && resRecords.data) setLeaveRecords(resRecords.data.records);
+      if (resRecords.success && resRecords.data) setLeaveRecords(Array.isArray(resRecords.data) ? resRecords.data : []);
       if (resBalance.success && resBalance.data) setBalance(resBalance.data);
     } catch (_) {}
   }, []);

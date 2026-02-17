@@ -1,8 +1,8 @@
 import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
-import { useAuth } from '@context/AuthContext';
-import { AttendanceProvider } from '@context/AttendanceContext';
-import { COLORS } from '@constants/colors';
+import { useAuth } from '../context/AuthContext';
+import { AttendanceProvider } from '../context/AttendanceContext';
+import { COLORS } from '../constants/colors';
 import { AuthStack } from './AuthStack';
 import { MainStack } from './MainStack';
 

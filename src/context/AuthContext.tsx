@@ -2,8 +2,8 @@
  * Mock only — no backend, no apiClient calls.
  */
 import React, { createContext, useContext, useReducer, useEffect, ReactNode } from 'react';
-import { User } from '@types/index';
-import { secureStorage, appStorage, STORAGE_KEYS } from '@utils/storage';
+import type { User } from '../types';
+import { secureStorage, appStorage, STORAGE_KEYS } from '../utils/storage';
 import { MOCK_USER } from '../data/mockData';
 
 interface AuthState {

@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useMemo} from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import {
   View,
   Text,
@@ -7,18 +7,15 @@ import {
   SafeAreaView,
   RefreshControl,
 } from 'react-native';
-import {useFocusEffect} from '@react-navigation/native';
-import {COLORS, THEME} from '@constants/colors';
-import {attendanceApi, AttendanceRecord} from '@api/attendance';
-import {MonthSelector} from '@components/attendance/MonthSelector';
-import {MonthYearPickerModal} from '@components/attendance/MonthYearPickerModal';
-import {AttendanceRecordDetailModal} from '@components/attendance/AttendanceRecordDetailModal';
-import {
-  DailyLogCard,
-  DailyLogRecord,
-} from '@components/attendance/DailyLogCard';
-import {ScreenTitle, SCREEN_PAD} from '@components/ui/ScreenTitle';
-import {Clock, CalendarCheck, AlertCircle, XCircle} from 'lucide-react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import { COLORS, THEME } from '../constants/colors';
+import { attendanceApi, AttendanceRecord } from '../api/attendance';
+import { MonthSelector } from '../components/attendance/MonthSelector';
+import { MonthYearPickerModal } from '../components/attendance/MonthYearPickerModal';
+import { AttendanceRecordDetailModal } from '../components/attendance/AttendanceRecordDetailModal';
+import { DailyLogCard, DailyLogRecord } from '../components/attendance/DailyLogCard';
+import { ScreenTitle, SCREEN_PAD } from '../components/ui/ScreenTitle';
+import { Clock, CalendarCheck, AlertCircle, XCircle } from 'lucide-react-native';
 
 const MONTHS = [
   'January',
@@ -82,7 +79,7 @@ export function AttendanceScreen() {
   const loadAttendance = useCallback(async () => {
     try {
       const res = await attendanceApi.getAttendanceHistory(1, 100);
-      if (res.success && res.data) setRecords(res.data.records);
+      if (res.success && res.data) setRecords(Array.isArray(res.data) ? res.data : []);
     } catch (_) {}
   }, []);
 
@@ -261,8 +258,8 @@ export function AttendanceScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: COLORS.backgroundSecondary},
-  content: {paddingHorizontal: SCREEN_PAD, paddingBottom: THEME.spacing.xxl},
+  container: { flex: 1, backgroundColor: COLORS.backgroundSecondary },
+  content: { paddingHorizontal: SCREEN_PAD, paddingBottom: THEME.spacing.xxl },
   summaryGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -282,9 +279,9 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
     borderColor: COLORS.primary,
   },
-  summaryLabelOnPrimary: {color: 'rgba(255,255,255,0.9)'},
-  summaryValueOnPrimary: {color: COLORS.onPrimary},
-  summaryIcon: {marginBottom: THEME.spacing.xs},
+  summaryLabelOnPrimary: { color: 'rgba(255,255,255,0.9)' },
+  summaryValueOnPrimary: { color: COLORS.onPrimary },
+  summaryIcon: { marginBottom: THEME.spacing.xs },
   summaryLabel: {
     fontSize: 10,
     fontWeight: '600',
@@ -292,8 +289,8 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
     marginTop: 2,
   },
-  summaryValue: {fontSize: 18, fontWeight: '700', color: COLORS.textPrimary},
-  summaryValueSmall: {fontSize: 16},
+  summaryValue: { fontSize: 18, fontWeight: '700', color: COLORS.textPrimary },
+  summaryValueSmall: { fontSize: 16 },
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -307,7 +304,7 @@ const styles = StyleSheet.create({
     color: COLORS.textPrimary,
     letterSpacing: 0.3,
   },
-  sectionSub: {fontSize: 12, color: COLORS.textSecondary, marginTop: 2},
+  sectionSub: { fontSize: 12, color: COLORS.textSecondary, marginTop: 2 },
   logHeader: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -338,8 +335,8 @@ const styles = StyleSheet.create({
     color: COLORS.textTertiary,
     letterSpacing: 0.5,
   },
-  emptyLogs: {paddingVertical: THEME.spacing.xxl, alignItems: 'center'},
-  emptyIcon: {marginBottom: THEME.spacing.md, opacity: 0.6},
+  emptyLogs: { paddingVertical: THEME.spacing.xxl, alignItems: 'center' },
+  emptyIcon: { marginBottom: THEME.spacing.md, opacity: 0.6 },
   emptyTitle: {
     fontSize: 16,
     fontWeight: '600',

@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
-import { LocationCoordinates } from '@types/index';
-import { getGeofenceStatus as getGeofenceStatusUtil } from '@utils/geolocation';
-import { GEOFENCE_CONFIG } from '@constants/geofencing';
+import type { LocationCoordinates } from '../types';
+import { getGeofenceStatus as getGeofenceStatusUtil } from '../utils/geolocation';
+import { GEOFENCE_CONFIG } from '../constants/geofencing';
 
 /** Mock office location (geolocation native module removed to avoid crashes). */
 const MOCK_LOCATION: LocationCoordinates = {

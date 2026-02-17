@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { COLORS, THEME } from '@constants/colors';
+import { COLORS, THEME } from '../../constants/colors';
 import { SectionHeader } from './SectionHeader';
 
 interface LeaveBalanceCardsProps {

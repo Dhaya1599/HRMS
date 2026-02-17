@@ -1,11 +1,11 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Home, Calendar, Clock, User } from 'lucide-react-native';
-import { COLORS } from '@constants/colors';
-import { HomeScreen } from '@screens/HomeScreen';
-import { AttendanceScreen } from '@screens/AttendanceScreen';
-import { LeaveScreen } from '@screens/LeaveScreen';
-import { ProfileScreen } from '@screens/ProfileScreen';
+import { COLORS } from '../constants/colors';
+import { HomeScreen } from '../screens/HomeScreen';
+import { AttendanceScreen } from '../screens/AttendanceScreen';
+import { LeaveScreen } from '../screens/LeaveScreen';
+import { ProfileScreen } from '../screens/ProfileScreen';
 
 export type MainTabsParamList = {
   Home: undefined;

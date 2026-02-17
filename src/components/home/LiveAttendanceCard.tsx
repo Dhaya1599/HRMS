@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { COLORS, THEME } from '@constants/colors';
-import { useLiveElapsed } from '@hooks/useLiveElapsed';
+import { COLORS, THEME } from '../../constants/colors';
+import { useLiveElapsed } from '../../hooks/useLiveElapsed';
 import { LogOut } from 'lucide-react-native';
 
 interface LiveAttendanceCardProps {

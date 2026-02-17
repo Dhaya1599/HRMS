@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View,
   ScrollView,
@@ -6,24 +6,21 @@ import {
   SafeAreaView,
   RefreshControl,
 } from 'react-native';
-import {useFocusEffect} from '@react-navigation/native';
-import {useAuth} from '@context/AuthContext';
-import {useAttendance} from '@context/AttendanceContext';
-import {COLORS, THEME} from '@constants/colors';
-import {leaveApi} from '@api/leave';
+import { useFocusEffect } from '@react-navigation/native';
+import { useAuth } from '../context/AuthContext';
+import { useAttendance } from '../context/AttendanceContext';
+import { COLORS, THEME } from '../constants/colors';
+import { leaveApi } from '../api/leave';
 import {
   MOCK_PROFILE_EXTENDED,
   MOCK_LEAVE_BALANCE,
   MOCK_ANNOUNCEMENTS,
-  MOCK_HOLIDAYS,
 } from '../data/mockData';
-import {HomeHeaderGreeting} from '@components/home/HomeHeaderGreeting';
-import {WelcomeStrip} from '@components/home/WelcomeStrip';
-import {LiveAttendanceCard} from '@components/home/LiveAttendanceCard';
-import {LeaveBalanceCards} from '@components/home/LeaveBalanceCards';
-import {UpcomingHolidaysList} from '@components/home/UpcomingHolidaysList';
-import {AnnouncementsBlock} from '@components/home/AnnouncementsBlock';
-import {SCREEN_PAD} from '@components/ui/ScreenTitle';
+import { HomeHeaderGreeting } from '../components/home/HomeHeaderGreeting';
+import { LiveAttendanceCard } from '../components/home/LiveAttendanceCard';
+import { LeaveBalanceCards } from '../components/home/LeaveBalanceCards';
+import { AnnouncementsBlock } from '../components/home/AnnouncementsBlock';
+import { SCREEN_PAD } from '../components/ui/ScreenTitle';
 
 export function HomeScreen({
   navigation,
@@ -106,9 +103,9 @@ export function HomeScreen({
 }
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: COLORS.backgroundSecondary},
+  container: { flex: 1, backgroundColor: COLORS.backgroundSecondary },
   scroll: {flex: 1},
-  scrollContent: {paddingBottom: THEME.spacing.xxl},
+  scrollContent: { paddingBottom: THEME.spacing.xxl },
   content: {
     paddingHorizontal: SCREEN_PAD,
     paddingTop: THEME.spacing.lg,

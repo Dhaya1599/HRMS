@@ -8,10 +8,10 @@ import {
   Pressable,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {COLORS, THEME} from '@constants/colors';
+import { COLORS, THEME } from '../../constants/colors';
 import {User, Bell, Settings, LogOut} from 'lucide-react-native';
-import {useAuth} from '@context/AuthContext';
-import {MOCK_UNREAD_COUNT} from '../../data/mockData';
+import { useAuth } from '../../context/AuthContext';
+import { MOCK_UNREAD_COUNT } from '../../data/mockData';
 
 interface HomeHeaderGreetingProps {
   userName: string;
